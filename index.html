@@ -3,70 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
     <title>Nirmalya Sinha | VLSI, FPGA &amp; Hardware Security Engineer</title>
-    <meta name="description" content="Portfolio of Nirmalya Sinha — B.Tech EE (VLSI Design & Technology) at Rashtriya Raksha University, Founder @ LearnVLSI (VPlay &amp; eSim), and Summer Research Intern at IIT (BHU) Varanasi. Specializing in Open-Source ASIC RTL-to-GDSII, FPGA Edge AI, Hardware Security, and Autonomous UAVs.">
+    <meta name="description" content="Nirmalya Sinha — B.Tech EE (VLSI Design, 9.05 SGPA) at Rashtriya Raksha University, Founder @ LearnVLSI (VPlay & eSim), and IIT (BHU) Summer Research Intern.">
 
-    <!-- Tailwind CSS -->
+    <!-- Zero-Flash Dual-Theme Bootstrap -->
+    <script>
+        (function () {
+            var root = document.documentElement;
+            root.classList.add('js-enabled');
+            var saved = null;
+            try { saved = localStorage.getItem('nirmalya-theme'); } catch (e) {}
+            var theme = (saved === 'light' || saved === 'dark')
+                ? saved
+                : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            root.setAttribute('data-theme', theme);
+            root.style.colorScheme = theme;
+        })();
+    </script>
+
+    <!-- Tailwind Layout Utilities -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Google Fonts: Inter (Body), Poppins (Headings), JetBrains Mono (Silicon/EDA Meta) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body class="bg-black text-[#cbd5e1] selection:bg-cyan-400/25 selection:text-white">
-    <div class="pcb-grid-overlay" aria-hidden="true"></div>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <canvas id="circuit-canvas" aria-hidden="true"></canvas>
 
-    <!-- Header & Navigation -->
-    <header id="header" class="fixed top-0 left-0 w-full py-3.5 px-4 sm:px-8 md:px-14 lg:px-12 xl:px-20 z-40">
-        <nav class="container mx-auto flex justify-between items-center gap-4" aria-label="Main Navigation">
-            <a href="#home" class="text-2xl font-bold tracking-tight text-white hover:opacity-90 transition-opacity flex-shrink-0">
+    <!-- Shared Navigation Header -->
+    <header id="header" class="py-3 px-4 sm:px-8 lg:px-14">
+        <nav class="container mx-auto flex justify-between items-center gap-4" aria-label="Primary Navigation">
+            <a href="index.html" class="text-xl sm:text-2xl font-bold tracking-tight" style="color: var(--text-heading);">
                 Nirmalya<span class="highlight">.</span>
             </a>
 
-            <div class="hidden lg:flex items-center gap-5 xl:gap-6">
-                <ul class="flex items-center space-x-4 xl:space-x-5 text-sm">
-                    <li><a href="#home" class="nav-link active">Home</a></li>
-                    <li><a href="#about" class="nav-link">About</a></li>
-                    <li><a href="#experience" class="nav-link">Experience</a></li>
-                    <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><a href="#projects" class="nav-link">Projects</a></li>
-                    <li><a href="#documents" class="nav-link">Dossier</a></li>
-                    <li><a href="#highlights" class="nav-link">Highlights</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
+            <div class="hidden lg:flex items-center gap-6">
+                <ul class="flex items-center space-x-6">
+                    <li><a href="index.html" class="nav-link active" aria-current="page">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li><a href="vault.html" class="nav-link">Vault</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
                 </ul>
-                <a href="./Nirmalya_Sinha_CV.pdf" download class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-sm font-semibold text-[#05080f] bg-[#00e5ff] hover:bg-[#67e8f9] shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]">
-                    <i class="fas fa-file-arrow-down text-xs" aria-hidden="true"></i>
-                    <span>Resume</span>
-                </a>
+
+                <div class="flex items-center gap-2.5">
+                    <button type="button" data-open-cmd class="icon-control-btn px-3 gap-1.5 text-xs font-mono-tech" aria-label="Open quick navigation palette">
+                        <i class="fas fa-terminal text-[11px]" aria-hidden="true"></i>
+                        <span>⌘K</span>
+                    </button>
+
+                    <button id="theme-toggle" type="button" class="icon-control-btn" aria-label="Switch theme" aria-pressed="true">
+                        <span class="theme-icon-sun"><i class="fas fa-sun text-sm" aria-hidden="true"></i></span>
+                        <span class="theme-icon-moon"><i class="fas fa-moon text-sm" aria-hidden="true"></i></span>
+                    </button>
+
+                    <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="btn-primary !py-2 !px-3.5 !min-h-[40px] !text-xs">
+                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i>
+                        <span>Resume</span>
+                    </a>
+                </div>
             </div>
 
-            <button id="menu-btn" class="lg:hidden text-2xl p-2 text-[#cbd5e1] hover:text-[#00e5ff] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff] rounded-lg" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-                <i class="fas fa-bars" aria-hidden="true"></i>
-            </button>
+            <div class="flex lg:hidden items-center gap-2">
+                <button id="theme-toggle-mobile" type="button" onclick="document.getElementById('theme-toggle').click()" class="icon-control-btn" aria-label="Toggle Light or Dark Theme">
+                    <span class="theme-icon-sun"><i class="fas fa-sun text-sm" aria-hidden="true"></i></span>
+                    <span class="theme-icon-moon"><i class="fas fa-moon text-sm" aria-hidden="true"></i></span>
+                </button>
+                <button id="menu-btn" type="button" class="icon-control-btn text-lg" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
         </nav>
 
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="lg:hidden mt-3" aria-hidden="true">
-            <ul class="flex flex-col items-center space-y-3.5 py-6 px-4 max-h-[calc(100dvh-5.5rem)] overflow-y-auto bg-[#05080f]/95 backdrop-blur-md rounded-2xl border border-[#142033] shadow-2xl">
-                <li><a href="#home" class="nav-link active text-base">Home</a></li>
-                <li><a href="#about" class="nav-link text-base">About</a></li>
-                <li><a href="#experience" class="nav-link text-base">Experience</a></li>
-                <li><a href="#skills" class="nav-link text-base">Skills</a></li>
-                <li><a href="#projects" class="nav-link text-base">Projects</a></li>
-                <li><a href="#documents" class="nav-link text-base">Dossier</a></li>
-                <li><a href="#highlights" class="nav-link text-base">Highlights</a></li>
-                <li><a href="#contact" class="nav-link text-base">Contact</a></li>
-                <li class="pt-2">
-                    <a href="./Nirmalya_Sinha_CV.pdf" download class="inline-flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-semibold text-[#05080f] bg-[#00e5ff] hover:bg-[#67e8f9] shadow-sm transition-all">
-                        <i class="fas fa-file-arrow-down text-xs" aria-hidden="true"></i>
+            <ul class="mobile-menu-panel flex flex-col items-center space-y-3 py-5 px-4 shadow-xl">
+                <li><a href="index.html" class="nav-link active text-base" aria-current="page">Home</a></li>
+                <li><a href="about.html" class="nav-link text-base">About</a></li>
+                <li><a href="projects.html" class="nav-link text-base">Projects</a></li>
+                <li><a href="vault.html" class="nav-link text-base">Vault</a></li>
+                <li><a href="contact.html" class="nav-link text-base">Contact</a></li>
+                <li class="pt-2 flex items-center gap-3">
+                    <button type="button" data-open-cmd class="btn-secondary !py-2 !px-4 !text-xs">
+                        <span>Search ⌘K</span>
+                    </button>
+                    <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="btn-primary !py-2 !px-4 !text-xs">
+                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i>
                         <span>Resume</span>
                     </a>
                 </li>
@@ -74,1351 +104,310 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="min-h-screen min-h-[100dvh] flex items-center pt-28 pb-16 px-4 sm:px-8 md:px-14 lg:px-20">
-            <div class="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 lg:gap-16">
-                <div class="text-center md:text-left md:w-3/5 reveal revealed">
+    <main id="main-content" class="pt-24 pb-20 px-4 sm:px-8 lg:px-14">
+        <!-- Minimalist Front-Page Hero: Picture + Identity -->
+        <section class="container mx-auto max-w-5xl py-10 sm:py-16">
+            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-10 lg:gap-14">
+                <div class="md:w-3/5 text-center md:text-left">
                     <div class="mb-4 flex justify-center md:justify-start">
-                        <a href="https://learnvlsi.in" target="_blank" rel="noopener noreferrer" class="learnvlsi-pill inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-[#10b981]/10 text-[#34d399] border border-[#10b981]/30 hover:bg-[#10b981]/20 hover:border-[#10b981]/60 transition-colors">
-                            <span class="status-dot w-2 h-2 rounded-full" aria-hidden="true"></span>
-                            <span>Building LearnVLSI.in &#8599;</span>
+                        <a href="https://learnvlsi.in" target="_blank" rel="noopener noreferrer" class="status-pill">
+                            <span class="status-dot" aria-hidden="true"></span>
+                            <span>Founder @ LearnVLSI (VPlay &amp; eSim) &#8599;</span>
                         </a>
                     </div>
 
-                    <p class="font-mono-tech text-xs md:text-sm font-semibold uppercase tracking-widest text-[#38bdf8] mb-2">From Field Sensors to Silicon</p>
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold my-2 text-white tracking-tight break-words">Nirmalya Sinha</h1>
-                    <h2 class="text-xl sm:text-2xl md:text-3xl font-medium text-[#cbd5e1] my-3 min-h-[3.5rem] sm:min-h-[2.5rem] md:min-h-[3rem]">
-                        <span id="typing-text" class="highlight font-semibold">VLSI &amp; Hardware Security Engineer</span><span class="typing-cursor" aria-hidden="true"></span>
-                    </h2>
-                    <p class="text-[#cbd5e1] my-6 max-w-xl mx-auto md:mx-0 text-base md:text-lg leading-relaxed">
-                        From ESP32 sensor nodes and autonomous UAV swarms to FPGA-accelerated Edge AI and SkyWater 130nm silicon. B.Tech EE (VLSI) engineer at Rashtriya Raksha University and Founder @ LearnVLSI (VPlay &amp; eSim)—building hardware-rooted systems from prototype to tape-out.
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+                        Nirmalya Sinha
+                    </h1>
+
+                    <p class="text-lg sm:text-xl font-medium mb-4" style="color: var(--text-heading);">
+                        VLSI, FPGA Edge AI &amp; Hardware Security Engineer
                     </p>
 
-                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-3.5 my-8">
-                        <a href="#projects" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-[#05080f] bg-[#00e5ff] hover:bg-[#67e8f9] shadow-lg shadow-[#00e5ff]/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]">
+                    <p class="text-sm sm:text-base leading-relaxed max-w-xl mx-auto md:mx-0 mb-8" style="color: var(--text-muted);">
+                        B.Tech Electronics Engineering (VLSI Design, 9.05 SGPA) at Rashtriya Raksha University &bull; Summer Research Intern at IIT (BHU) Varanasi &bull; Designing from ESP32 edge nodes and autonomous UAVs to SkyWater 130nm silicon.
+                    </p>
+
+                    <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-7">
+                        <a href="projects.html" class="btn-primary">
                             <span>Explore Projects</span>
-                            <i class="fas fa-arrow-right text-sm" aria-hidden="true"></i>
+                            <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i>
                         </a>
-                        <a href="./Nirmalya_Sinha_CV.pdf" download class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium text-[#f8fafc] bg-[#0a0f1c] border border-[#142033] hover:border-[#00e5ff]/60 hover:text-[#00e5ff] shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]">
-                            <i class="fas fa-download text-sm highlight" aria-hidden="true"></i>
-                            <span>Download CV</span>
-                        </a>
-                    </div>
-
-                    <div class="flex items-center justify-center md:justify-start space-x-3">
-                        <a href="https://www.linkedin.com/in/nirmalya-sinha-8b7a37318/" target="_blank" rel="noopener noreferrer" class="w-11 h-11 bg-[#0a0f1c] rounded-lg border border-[#142033] flex items-center justify-center text-[#cbd5e1] hover:text-[#00e5ff] hover:border-[#00e5ff]/50 shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]" aria-label="LinkedIn Profile">
-                            <i class="fab fa-linkedin-in text-lg" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://github.com/NirmalyaASinha" target="_blank" rel="noopener noreferrer" class="w-11 h-11 bg-[#0a0f1c] rounded-lg border border-[#142033] flex items-center justify-center text-[#cbd5e1] hover:text-white hover:border-[#00e5ff]/50 shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]" aria-label="GitHub Profile">
-                            <i class="fab fa-github text-lg" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://www.youtube.com/@Nirmalya-Sinha" target="_blank" rel="noopener noreferrer" class="w-11 h-11 bg-[#0a0f1c] rounded-lg border border-[#142033] flex items-center justify-center text-[#cbd5e1] hover:text-red-400 hover:border-red-400/50 shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]" aria-label="YouTube Channel">
-                            <i class="fab fa-youtube text-lg" aria-hidden="true"></i>
+                        <a href="about.html" class="btn-secondary">
+                            <span>About &amp; Journey</span>
                         </a>
                     </div>
-                </div>
 
-                <div class="md:w-2/5 flex justify-center flex-shrink-0 reveal revealed">
-                    <img src="assets/images/profile/one.jpg" alt="Nirmalya Sinha" class="hero-avatar-frame rounded-full w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 xl:w-80 xl:h-80 object-cover bg-[#0a0f1c]" onerror="this.onerror=null;this.src='https://placehold.co/400x400/0a0f1c/00e5ff?text=Nirmalya';">
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="py-20 sm:py-24 px-4 sm:px-8 md:px-14 lg:px-20 section-bg">
-            <div class="container mx-auto">
-                <div class="text-center mb-14 reveal">
-                    <div class="section-heading-wrap">
-                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">About <span class="highlight">Me</span></h2>
+                    <div class="flex items-center justify-center md:justify-start gap-2.5">
+                        <a href="https://www.linkedin.com/in/nirmalya-sinha-8b7a37318/" target="_blank" rel="noopener noreferrer" class="icon-control-btn" aria-label="LinkedIn Profile">
+                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://github.com/NirmalyaASinha" target="_blank" rel="noopener noreferrer" class="icon-control-btn" aria-label="GitHub Profile">
+                            <i class="fab fa-github" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@Nirmalya-Sinha" target="_blank" rel="noopener noreferrer" class="icon-control-btn" aria-label="YouTube Channel">
+                            <i class="fab fa-youtube" aria-hidden="true"></i>
+                        </a>
                     </div>
-                    <p class="text-[#94a3b8] mt-4 max-w-2xl mx-auto text-sm sm:text-base">
-                        How early microcontroller prototypes evolved into autonomous defence systems, national-finalist platforms, and silicon-level research.
-                    </p>
                 </div>
 
-                <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-14">
-                    <div class="lg:w-4/12 w-full flex justify-center reveal">
-                        <div class="editorial-card rounded-2xl w-full max-w-sm">
-                            <img src="assets/images/profile/profile.jpg" alt="Nirmalya Sinha profile photo" class="w-full h-auto block object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x600/0a0f1c/00e5ff?text=Profile';">
-                        </div>
-                    </div>
-                    <div class="lg:w-8/12 reveal">
-                        <h3 class="text-2xl sm:text-3xl font-bold mb-5 text-white">One Continuous Stack: Sensors, Autonomy, Security &amp; Silicon</h3>
-                        <p class="text-[#cbd5e1] mb-8 leading-relaxed text-base sm:text-lg">
-                            Pursuing a B.Tech in Electrical Engineering (VLSI Design &amp; Technology) at Rashtriya Raksha University (2024–2028, 9.05 SGPA), my path began with low-cost embedded IoT prototypes before scaling into Pixhawk UAV swarms, cryptographic defence accountability, and national-finalist civic platforms. Today, that systems mindset converges on silicon: VSSC-sponsored FPGA Edge AI at IIT (BHU), open-source PicoRV32 RTL-to-GDSII flows on SkyWater 130nm, and browser-based VLSI tooling at LearnVLSI.
-                        </p>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3 gap-5">
-                            <div class="editorial-card p-5">
-                                <div class="flex items-center gap-2.5 mb-2.5">
-                                    <i class="fas fa-graduation-cap highlight text-lg" aria-hidden="true"></i>
-                                    <h4 class="font-semibold text-base text-white">Education</h4>
-                                </div>
-                                <p class="text-sm font-medium text-[#f8fafc]">B.Tech EE (VLSI Design) &bull; 9.05 SGPA</p>
-                                <p class="text-xs text-[#94a3b8] mt-1">Rashtriya Raksha University (2024–2028)</p>
-                            </div>
-
-                            <div class="editorial-card p-5">
-                                <div class="flex items-center gap-2.5 mb-2.5">
-                                    <i class="fas fa-award highlight text-lg" aria-hidden="true"></i>
-                                    <h4 class="font-semibold text-base text-white">Leadership</h4>
-                                </div>
-                                <p class="text-sm text-[#cbd5e1] leading-snug">
-                                    Founder @ LearnVLSI &bull; Director's Fellow (RRU) &bull; Student Advisor (SASET)
-                                </p>
-                            </div>
-
-                            <div class="editorial-card p-5">
-                                <div class="flex items-center gap-2.5 mb-2.5">
-                                    <i class="fas fa-microchip highlight text-lg" aria-hidden="true"></i>
-                                    <h4 class="font-semibold text-base text-white">Focus Areas</h4>
-                                </div>
-                                <p class="text-sm text-[#cbd5e1] leading-snug">
-                                    Open-Source ASIC Flows &bull; FPGA Edge AI &bull; Hardware Security &amp; DefenceTech
-                                </p>
-                            </div>
-                        </div>
+                <div class="md:w-2/5 flex justify-center">
+                    <div class="hero-portrait-frame rounded-2xl overflow-hidden w-60 sm:w-72 lg:w-80 aspect-[4/5]">
+                        <img src="assets/images/profile/one.jpg" alt="Nirmalya Sinha portrait" class="w-full h-full object-cover">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Experience & Ventures Timeline Section -->
-        <section id="experience" class="py-20 sm:py-24 px-4 sm:px-8 md:px-14 lg:px-20">
-            <div class="container mx-auto max-w-4xl">
-                <div class="text-center mb-14 reveal">
-                    <div class="section-heading-wrap">
-                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Experience &amp; <span class="highlight">Ventures</span></h2>
+        <!-- Interactive Silicon Die Explorer (Concept #1) -->
+        <section id="silicon-die-explorer" class="container mx-auto max-w-6xl mt-4 sm:mt-8 mb-14 reveal" aria-labelledby="die-explorer-heading">
+            <div class="surface-card p-4 sm:p-6">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <div>
+                        <p class="font-mono-tech text-[11px] uppercase tracking-widest highlight">Interactive Silicon Die &bull; 1000 &mu;m &times; 1000 &mu;m</p>
+                        <h2 id="die-explorer-heading" class="text-lg sm:text-xl font-bold">Steer the Clock Pulse Across the Chip</h2>
                     </div>
-                    <p class="text-[#94a3b8] mt-4 max-w-2xl mx-auto text-sm sm:text-base">
-                        Where hands-on prototyping and campus engineering mature into funded research, national foundry training, and open VLSI infrastructure.
-                    </p>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="font-mono-tech text-[11px] px-2.5 py-1 rounded-md hidden sm:inline-block" style="background: var(--bg-surface-subtle); color: var(--text-muted); border: 1px solid var(--border-subtle);">
+                            WASD / Arrows or Click Pad
+                        </span>
+                        <button id="die-autopilot-btn" type="button" class="doc-action-btn !min-h-[32px] !py-1 !px-3 text-xs" aria-pressed="true">
+                            <i class="fas fa-wave-square" aria-hidden="true"></i>
+                            <span>Auto-Route: ON</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="timeline-track space-y-8">
-                    <!-- Experience 1 -->
-                    <article class="timeline-item flex gap-5 sm:gap-6 items-start reveal">
-                        <div class="timeline-dot" aria-hidden="true">
-                            <i class="fas fa-rocket text-sm"></i>
-                        </div>
-                        <div class="editorial-card p-6 flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                                <h3 class="text-lg sm:text-xl font-bold text-white">Founder &amp; Lead Developer — LearnVLSI (VPlay &amp; eSim)</h3>
-                                <span class="project-badge project-badge--emerald font-mono-tech">2026 – Present</span>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+                    <div class="lg:col-span-8 relative">
+                        <canvas id="die-explorer-canvas" tabindex="0" class="w-full h-[270px] sm:h-[310px] block rounded-xl cursor-crosshair focus:outline-none focus:ring-2" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);" aria-label="Interactive SkyWater 130nm Silicon Die Explorer. Use WASD, Arrow keys, or click a macro block to inspect."></canvas>
+                    </div>
+
+                    <div class="lg:col-span-4 flex flex-col justify-between p-4 rounded-xl" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <span id="die-block-tag" class="tech-badge font-mono-tech">SOC_TOP</span>
+                                <span id="die-block-coord" class="font-mono-tech text-[11px]" style="color: var(--text-muted);">X: 500 &mu;m &bull; Y: 250 &mu;m</span>
                             </div>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-3">
-                                Turning hard-won RTL and physical design workflows into an accessible browser studio—combining a 90-day Verilog arena, an interactive K-Map/FSM simulator (<a href="https://esim.learnvlsi.in" target="_blank" rel="noopener noreferrer" class="highlight hover:underline">esim.learnvlsi.in</a>), and a 7-track SkyWater 130nm RTL-to-GDSII pipeline.
+                            <h3 id="die-block-title" class="text-base sm:text-lg font-bold mb-1.5">PicoRV32 Sky130 GDSII</h3>
+                            <p id="die-block-desc" class="text-xs sm:text-sm leading-relaxed mb-3" style="color: var(--text-secondary);">
+                                1.00 mm&sup2; open-source RISC-V SoC @ 50 MHz (+13.76 ns setup slack), 24,441 logic cells, 0 Magic DRC &amp; 0 Netgen LVS errors.
                             </p>
-                            <a href="https://learnvlsi.in" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-medium highlight hover:underline">
-                                <span>learnvlsi.in</span>
-                                <i class="fas fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>
+                            <p id="die-block-metric" class="font-mono-tech text-xs highlight mb-4">85.88 MB top.gds &bull; 35.9 mW</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <a id="die-block-link" href="vault.html?doc=picorv32-report" class="btn-primary w-full !py-2.5 !text-xs">
+                                <span>Inspect Module</span>
+                                <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i>
                             </a>
-                        </div>
-                    </article>
 
-                    <!-- Experience 2 -->
-                    <article class="timeline-item flex gap-5 sm:gap-6 items-start reveal">
-                        <div class="timeline-dot" aria-hidden="true">
-                            <i class="fas fa-flask text-sm"></i>
-                        </div>
-                        <div class="editorial-card p-6 flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                                <h3 class="text-lg sm:text-xl font-bold text-white">Summer Research Intern — IIT (BHU) Varanasi</h3>
-                                <span class="project-badge font-mono-tech">Jun 2026 – Jul 2026</span>
+                            <!-- Mobile / Touch Quick Pad Selector -->
+                            <div class="grid grid-cols-4 gap-1.5 pt-2 border-t" style="border-color: var(--border-subtle);">
+                                <button type="button" data-die-jump="0" class="stage-btn !text-center !px-1 !py-1.5 !text-[10px] font-mono-tech">CORE_0</button>
+                                <button type="button" data-die-jump="1" class="stage-btn active !text-center !px-1 !py-1.5 !text-[10px] font-mono-tech">SOC_TOP</button>
+                                <button type="button" data-die-jump="2" class="stage-btn !text-center !px-1 !py-1.5 !text-[10px] font-mono-tech">FPGA_AI</button>
+                                <button type="button" data-die-jump="3" class="stage-btn !text-center !px-1 !py-1.5 !text-[10px] font-mono-tech">SEC_UAV</button>
                             </div>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed">
-                                Architected a VSSC-sponsored (<code class="font-mono-tech text-xs px-1.5 py-0.5 rounded bg-[#0f172a] border border-[#142033] text-[#00e5ff]">RES-VSSC-2025-015</code>) Edge AI electric motor fault-detection pipeline under Dr. Priya Ranjan Muduli—bringing high-accuracy spectrogram diagnostics from PyTorch down to custom Vitis HLS IP on PYNQ-Z2 and Xilinx ZCU-104 FPGAs.
-                            </p>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 sm:py-24 px-4 sm:px-8 md:px-14 lg:px-20 section-bg">
-            <div class="container mx-auto">
-                <div class="text-center mb-14 reveal">
-                    <div class="section-heading-wrap">
-                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Technical <span class="highlight">Skills</span></h2>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
-                    <!-- Category 1: VLSI & Open-Source ASIC -->
-                    <div class="editorial-card p-6 sm:p-7 reveal">
-                        <div class="flex items-center gap-3 mb-5 pb-3 border-b border-[#142033]">
-                            <div class="w-10 h-10 rounded-lg bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center highlight">
-                                <i class="fas fa-microchip" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-white">VLSI &amp; Open-Source ASIC</h3>
-                        </div>
-                        <div class="flex flex-wrap gap-2.5">
-                            <span class="skill-pill">Verilog HDL</span>
-                            <span class="skill-pill">OpenLane</span>
-                            <span class="skill-pill">OpenROAD</span>
-                            <span class="skill-pill">SkyWater 130nm PDK</span>
-                            <span class="skill-pill">Yosys</span>
-                            <span class="skill-pill">Verilator</span>
-                            <span class="skill-pill">Icarus Verilog</span>
-                            <span class="skill-pill">Magic</span>
-                            <span class="skill-pill">KLayout</span>
-                            <span class="skill-pill">Netgen</span>
-                        </div>
-                    </div>
-
-                    <!-- Category 2: FPGA & Digital Systems -->
-                    <div class="editorial-card p-6 sm:p-7 reveal">
-                        <div class="flex items-center gap-3 mb-5 pb-3 border-b border-[#142033]">
-                            <div class="w-10 h-10 rounded-lg bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center highlight">
-                                <i class="fas fa-memory" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-white">FPGA &amp; Digital Systems</h3>
-                        </div>
-                        <div class="flex flex-wrap gap-2.5">
-                            <span class="skill-pill">Xilinx Vivado</span>
-                            <span class="skill-pill">Vitis HLS</span>
-                            <span class="skill-pill">Intel Quartus</span>
-                            <span class="skill-pill">PYNQ-Z2 &amp; ZCU-104</span>
-                            <span class="skill-pill">DE-10 Lite</span>
-                            <span class="skill-pill">Renesas ForgeFPGA</span>
-                            <span class="skill-pill">RISC-V Architecture</span>
-                        </div>
-                    </div>
-
-                    <!-- Category 3: Hardware Security, UAVs & Embedded -->
-                    <div class="editorial-card p-6 sm:p-7 reveal">
-                        <div class="flex items-center gap-3 mb-5 pb-3 border-b border-[#142033]">
-                            <div class="w-10 h-10 rounded-lg bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center highlight">
-                                <i class="fas fa-shield-halved" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-white">Hardware Security, UAVs &amp; Embedded</h3>
-                        </div>
-                        <div class="flex flex-wrap gap-2.5">
-                            <span class="skill-pill">Differential Fault Analysis (DFA)</span>
-                            <span class="skill-pill">RSA &amp; SHA-256 Hash-Chains</span>
-                            <span class="skill-pill">Pixhawk &amp; MAVLink/SITL</span>
-                            <span class="skill-pill">ESP32/ESP8266</span>
-                            <span class="skill-pill">Raspberry Pi</span>
-                            <span class="skill-pill">RFID/GPS</span>
-                            <span class="skill-pill">LoRa</span>
-                            <span class="skill-pill">SolidWorks CAD</span>
-                        </div>
-                    </div>
-
-                    <!-- Category 4: Software, AI & Cloud -->
-                    <div class="editorial-card p-6 sm:p-7 reveal">
-                        <div class="flex items-center gap-3 mb-5 pb-3 border-b border-[#142033]">
-                            <div class="w-10 h-10 rounded-lg bg-[#00e5ff]/10 border border-[#00e5ff]/30 flex items-center justify-center highlight">
-                                <i class="fas fa-code" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-lg sm:text-xl font-bold text-white">Software, AI &amp; Cloud</h3>
-                        </div>
-                        <div class="flex flex-wrap gap-2.5">
-                            <span class="skill-pill">C</span>
-                            <span class="skill-pill">Python</span>
-                            <span class="skill-pill">MicroPython</span>
-                            <span class="skill-pill">PyTorch/Scikit-learn</span>
-                            <span class="skill-pill">FastAPI</span>
-                            <span class="skill-pill">Next.js</span>
-                            <span class="skill-pill">PostgreSQL</span>
-                            <span class="skill-pill">Drizzle ORM</span>
-                            <span class="skill-pill">Cloudflare Workers</span>
-                            <span class="skill-pill">Docker</span>
-                            <span class="skill-pill">Git/GitHub</span>
-                            <span class="skill-pill">Linux</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="py-20 sm:py-24 px-4 sm:px-8 md:px-14 lg:px-20">
-            <div class="container mx-auto">
-                <div class="text-center mb-10 reveal">
-                    <div class="section-heading-wrap">
-                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Featured <span class="highlight">Projects</span></h2>
-                    </div>
-                    <p class="text-[#94a3b8] mt-4 max-w-2xl mx-auto text-sm sm:text-base">
-                        Thirteen builds tracing four chapters—from early embedded telemetry and autonomous UAVs to national-finalist platforms, Edge AI accelerators, and Sky130 silicon. Filter by domain or click any visual to inspect.
-                    </p>
+        <!-- Highlights & Milestones Photo Gallery -->
+        <section id="highlights" class="container mx-auto max-w-6xl mt-6 sm:mt-10 reveal" aria-labelledby="highlights-heading">
+            <div class="text-center mb-10">
+                <div class="section-heading-wrap">
+                    <h2 id="highlights-heading" class="text-2xl sm:text-4xl font-bold">Highlights &amp; <span class="highlight">Milestones</span></h2>
                 </div>
+                <p class="mt-3 text-sm" style="color: var(--text-muted);">Click any photo to view full-screen.</p>
+            </div>
 
-                <!-- Filter Tabs -->
-                <div id="project-filters" class="flex flex-wrap justify-center gap-2.5 mb-10 reveal" role="group" aria-label="Filter projects by category">
-                    <button type="button" class="filter-tab active" data-filter="all" aria-pressed="true">All (13)</button>
-                    <button type="button" class="filter-tab" data-filter="vlsi-fpga" aria-pressed="false">VLSI &amp; FPGA</button>
-                    <button type="button" class="filter-tab" data-filter="defence-uavs" aria-pressed="false">Defence &amp; UAVs</button>
-                    <button type="button" class="filter-tab" data-filter="fullstack-iot" aria-pressed="false">Full-Stack &amp; IoT</button>
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom CRAFTATHON 2026 Podium photo">
+                        <img src="assets/images/highlights/armourtrack-prize.png" alt="Winning 1st Runner Up for ArmourTrack at IEEE CRAFTATHON 2026" data-caption="CRAFTATHON 2026 Podium • 1st Runner Up (484 Participants) for ArmourTrack" class="object-[50%_25%]" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">1st Runner Up (484 Participants) for ArmourTrack &bull; IEEE CRAFTHON 2026</figcaption>
+                </figure>
 
-                <!-- Projects Grid -->
-                <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom SIH 2026 presentation photo">
+                        <img src="assets/images/highlights/sih2026-presentation.png" alt="Presenting Trishuli Early Warning to Judges at SIH 2026" data-caption="SIH 2026 Top 10 Finalist • Pitching Trishuli's ESP8266 mesh & Edge ML system" class="object-[50%_25%]" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">SIH 2026 Top 10 Finalist (~400 Participants) &bull; Trishuli Early Warning</figcaption>
+                </figure>
 
-                    <!-- 1. Data-Driven Fault Detection in Electric Motors -->
-                    <article class="project-card reveal" data-category="vlsi-fpga">
-                        <div class="project-media">
-                            <img src="assets/images/projects/IIT_BHU_Project.webp" alt="Data-Driven Fault Detection in Electric Motors on Xilinx ZCU-104" data-caption="Data-Driven Fault Detection in Electric Motors (IIT BHU / VSSC)" loading="lazy" onerror="this.onerror=null;this.src='assets/images/highlights/zcu104-setup.png';">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge">IIT (BHU) / VSSC Research</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Jun 2026 – Present</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">Data-Driven Fault Detection in Electric Motors</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                VSSC-sponsored (RES-VSSC-2025-015) bearing fault classifier trained on 48,800 CWRU spectrograms (99.73% ResNet-18, 97.29% RF, 95.24% MobileNetV2) with a custom Vitis HLS Random Forest IP accelerated on PYNQ-Z2 and Xilinx ZCU-104 FPGAs.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">ZCU-104</span>
-                                <span class="tech-pill">PYNQ-Z2</span>
-                                <span class="tech-pill">Vitis HLS</span>
-                                <span class="tech-pill">PyTorch</span>
-                                <span class="tech-pill">Edge AI</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <button type="button" class="project-link-btn" data-doc-open="motor-fault-report-pdf">
-                                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                                    <span>View Report</span>
-                                </button>
-                                <button type="button" class="project-link-btn" data-doc-open="motor-fault-deck-pptx">
-                                    <i class="fas fa-file-powerpoint" aria-hidden="true"></i>
-                                    <span>View Deck</span>
-                                </button>
-                                <a href="https://lnkd.in/p/dJpVNbc3" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fab fa-linkedin" aria-hidden="true"></i>
-                                    <span>LinkedIn</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom Xilinx ZCU-104 FPGA setup photo">
+                        <img src="assets/images/highlights/zcu104-setup.png" alt="Edge AI Motor Fault Detection Setup on Xilinx ZCU-104 FPGA" data-caption="VSSC Edge AI Testbench • Real-time motor-fault inference on Xilinx ZCU-104 FPGA" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">Edge AI Motor Fault Diagnostics on Xilinx ZCU-104 FPGA</figcaption>
+                </figure>
 
-                    <!-- 2. FPGA Prototyping & Digital Systems -->
-                    <article class="project-card reveal" data-category="vlsi-fpga">
-                        <div class="project-media">
-                            <img src="assets/images/projects/ExpalningDE_10.webp" alt="FPGA Prototyping and Digital Systems on DE-10 Lite and ForgeFPGA" data-caption="FPGA Prototyping &amp; Digital Systems" loading="lazy" onerror="this.onerror=null;this.src='assets/images/highlights/de10-lite-presentation.png';">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge">Ongoing Hardware Lab</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Jan 2025 – Present</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">FPGA Prototyping &amp; Digital Systems</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Continuous hardware design progression spanning DE-10 Lite and Renesas ForgeFPGA digital circuit design, bitstream implementation, and FPGA-accelerated ML inference.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">Verilog HDL</span>
-                                <span class="tech-pill">DE-10 Lite</span>
-                                <span class="tech-pill">ForgeFPGA</span>
-                                <span class="tech-pill">Quartus</span>
-                                <span class="tech-pill">Vivado</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <a href="https://lnkd.in/p/duVB_6xX" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fab fa-linkedin" aria-hidden="true"></i>
-                                    <span>LinkedIn</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom Intel DE-10 Lite FPGA session photo">
+                        <img src="assets/images/highlights/de10-lite-presentation.png" alt="Digital Systems and FPGA Session on DE-10 Lite" data-caption="Digital Systems Lab • Demonstrating RTL & FPGA prototyping on Intel DE-10 Lite" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">Digital Systems &amp; FPGA Prototyping Session on Intel DE-10 Lite</figcaption>
+                </figure>
 
-                    <!-- 3. LearnVLSI / VPlay & eSim -->
-                    <article class="project-card reveal" data-category="vlsi-fpga">
-                        <div class="project-media">
-                            <img src="assets/images/projects/LearnVLSI_Vplay.webp" alt="LearnVLSI VPlay and eSim Browser-Based VLSI Platform" data-caption="LearnVLSI / VPlay &amp; eSim Platform" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge project-badge--emerald">Live Platform</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">2026 – Present</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">LearnVLSI / VPlay &amp; eSim</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Scaling VLSI execution to the browser: unified education platform uniting a 90-day gamified Verilog arena, interactive K-Map/FSM simulation (esim.learnvlsi.in), and a 7-track SkyWater 130nm RTL-to-GDSII pipeline.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">OpenLane</span>
-                                <span class="tech-pill">Sky130</span>
-                                <span class="tech-pill">Next.js</span>
-                                <span class="tech-pill">Fastify</span>
-                                <span class="tech-pill">Cloudflare Workers</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <a href="https://learnvlsi.in" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fas fa-globe" aria-hidden="true"></i>
-                                    <span>Live</span>
-                                </a>
-                                <a href="https://esim.learnvlsi.in" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fas fa-bolt" aria-hidden="true"></i>
-                                    <span>eSim</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom IIT BHU certificate photo">
+                        <img src="assets/images/highlights/iitbhu-certificate.png" alt="Receiving IIT (BHU) Varanasi Internship Certificate from Dr. Priya Ranjan Muduli" data-caption="IIT (BHU) Varanasi • Research internship completion under Dr. Priya Ranjan Muduli" class="object-[50%_25%]" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">IIT (BHU) Research Internship Certificate &bull; Dr. Priya Ranjan Muduli</figcaption>
+                </figure>
 
-                    <!-- 4. PicoRV32 SoC RTL-to-GDSII Flow -->
-                    <article class="project-card reveal" data-category="vlsi-fpga">
-                        <div class="project-media">
-                            <img src="https://placehold.co/800x450/0a0f1c/00e5ff?text=PicoRV32+RTL-to-GDSII" alt="PicoRV32 RISC-V SoC RTL-to-GDSII Layout" data-caption="PicoRV32 SoC RTL-to-GDSII Flow (SkyWater 130nm)" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge">Open-Source ASIC</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">2026</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">PicoRV32 SoC RTL-to-GDSII Flow</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Closing the loop to physical silicon: end-to-end open-source ASIC physical design—synthesis, floorplanning, placement, CTS, routing, and DRC/LVS sign-off—on SkyWater 130nm via OpenLane, OpenROAD, Magic, and KLayout.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">OpenLane</span>
-                                <span class="tech-pill">OpenROAD</span>
-                                <span class="tech-pill">SkyWater 130nm</span>
-                                <span class="tech-pill">Magic</span>
-                                <span class="tech-pill">KLayout</span>
-                            </div>
-                            <div class="pt-3 border-t border-[#142033] font-mono-tech text-xs text-[#94a3b8]">
-                                OpenLane &bull; Sky130 GDSII Sign-off
-                            </div>
-                        </div>
-                    </article>
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom Governor of Tamil Nadu UAV showcase photo">
+                        <img src="assets/images/highlights/1753798081726.jpg" alt="Showcasing D_One custom quadcopter to Hon'ble Governor of Tamil Nadu" data-caption="D_One UAV Showcase • Presenting custom Pixhawk quadcopter to Hon'ble Governor of Tamil Nadu" class="object-[50%_25%]" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">D_One UAV Showcase to Hon'ble Governor of Tamil Nadu</figcaption>
+                </figure>
 
-                    <!-- 5. ArmourTrack: Defence Asset Accountability System -->
-                    <article class="project-card reveal" data-category="defence-uavs">
-                        <div class="project-media">
-                            <img src="assets/images/projects/Armor_Track.webp" alt="ArmourTrack Defence Asset Accountability System" data-caption="ArmourTrack: 2nd Prize (171 Teams) at CRAFTATHON 2026" loading="lazy" onerror="this.onerror=null;this.src='assets/images/highlights/armourtrack-prize.png';">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge project-badge--emerald">2nd Prize (171 Teams) &bull; CRAFTATHON</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Apr 2026</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">ArmourTrack: Defence Asset Accountability System</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Hardware-backed, cryptographically auditable defence asset lifecycle platform combining RSA-signed QR, RFID custody verification, ESP32 + NEO-6M GPS geofencing, AES-256, and an append-only SHA-256 hash-chain audit ledger.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">ESP32</span>
-                                <span class="tech-pill">RFID</span>
-                                <span class="tech-pill">RSA</span>
-                                <span class="tech-pill">SHA-256</span>
-                                <span class="tech-pill">GPS</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <button type="button" class="project-link-btn" data-doc-open="armourtrack-full-pdf">
-                                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                                    <span>View Report</span>
-                                </button>
-                                <button type="button" class="project-link-btn" data-doc-open="armourtrack-deck-pptx">
-                                    <i class="fas fa-file-powerpoint" aria-hidden="true"></i>
-                                    <span>View Deck</span>
-                                </button>
-                                <a href="https://github.com/NirmalyaASinha/ArmourTrack" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fab fa-github" aria-hidden="true"></i>
-                                    <span>GitHub</span>
-                                </a>
-                                <a href="https://lnkd.in/p/dT_HHcGn" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fab fa-linkedin" aria-hidden="true"></i>
-                                    <span>LinkedIn</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom HackTheSpring 26 GEC Gandhinagar photo">
+                        <img src="assets/images/highlights/1772700154695.jpg" alt="Receiving 3rd Rank at HackTheSpring 26 GEC Gandhinagar" data-caption="HackTheSpring '26 • 3rd Rank (80 Teams) for Secure POS System at GEC Gandhinagar" class="object-[50%_25%]" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">HackTheSpring '26 &bull; 3rd Rank (80 Teams) at GEC Gandhinagar</figcaption>
+                </figure>
 
-                    <!-- 6. DROMAT: AI-Powered Disaster Response Drone Ecosystem -->
-                    <article class="project-card reveal" data-category="defence-uavs">
-                        <div class="project-media">
-                            <img src="assets/images/projects/SIH_2025.webp" alt="DROMAT AI-Powered Disaster Response Drone Ecosystem" data-caption="DROMAT: AI-Powered Disaster Response Drone Ecosystem" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge">6th Place &bull; SIH 2025 Internal (RRU)</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Aug – Nov 2025</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">DROMAT: AI-Powered Disaster Response Drone Ecosystem</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Autonomy built for zero-connectivity zones: Raspberry Pi + Pixhawk relief UAV pairing A* pathfinding, YOLOv8/OpenCV, and RTK GNSS with an 868 MHz LoRa + satellite Hub and mobile command app.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">Pixhawk</span>
-                                <span class="tech-pill">Raspberry Pi</span>
-                                <span class="tech-pill">YOLOv8</span>
-                                <span class="tech-pill">A* Pathfinding</span>
-                                <span class="tech-pill">LoRa</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <button type="button" class="project-link-btn" data-doc-open="dromat-report-pdf">
-                                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                                    <span>View Report</span>
-                                </button>
-                                <button type="button" class="project-link-btn" data-doc-open="sih2025-deck-pdf">
-                                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                                    <span>SIH Deck</span>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- 7. D_One (DroneVision -> SWARM System) -->
-                    <article class="project-card reveal" data-category="defence-uavs">
-                        <div class="project-media">
-                            <img src="assets/images/highlights/1753798081726.jpg" alt="D_One DroneVision and SWARM UAV System showcased to Hon'ble Governor of TN" data-caption="D_One (DroneVision &rarr; SWARM System) showcased to Hon'ble Governor of Tamil Nadu" loading="lazy" onerror="this.onerror=null;this.src='assets/images/highlights/Governor_showcase.jpg';">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge project-badge--emerald">Showcased to Hon'ble Governor of TN</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Apr – Nov 2025</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">D_One (DroneVision &rarr; SWARM System)</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                From bench sensors to autonomous flight: custom Pixhawk X-frame quadcopter (22.3 min flight, &plusmn;1.5 m waypoint accuracy, 850 m range) scaled into a multi-drone Gazebo/SITL, MAVLink, and BlackSky MAV Console swarm testbed.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">Pixhawk</span>
-                                <span class="tech-pill">MAVLink</span>
-                                <span class="tech-pill">Gazebo SITL</span>
-                                <span class="tech-pill">DroneKit</span>
-                                <span class="tech-pill">Python</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <button type="button" class="project-link-btn" data-doc-open="dronevision-swarm-pdf">
-                                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                                    <span>View Report</span>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- 8. Trishuli Early Warning -->
-                    <article class="project-card reveal" data-category="defence-uavs">
-                        <div class="project-media">
-                            <img src="assets/images/highlights/sih2026-presentation.png" alt="Trishuli Early Warning Mine-Subsidence System" data-caption="Trishuli Early Warning (Top 10 Finalist &bull; SIH 2026)" loading="lazy" onerror="this.onerror=null;this.src='assets/images/projects/armourtrack.webp';">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge project-badge--emerald">Top 10 Finalist &bull; SIH 2026</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">2026</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">Trishuli Early Warning</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Decentralized mine-subsidence early warning system combining an ESP8266 Wi-Fi mesh network with real-time edge machine learning inference benchmarked on Raspberry Pi.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">Edge ML</span>
-                                <span class="tech-pill">Raspberry Pi</span>
-                                <span class="tech-pill">ESP8266</span>
-                                <span class="tech-pill">IoT Mesh</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <a href="https://app.eraser.io/workspace/qGxw2sa0KMacZ1IiaSG6" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fas fa-diagram-project" aria-hidden="true"></i>
-                                    <span>Architecture</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- 9. GreenWave: Emergency Corridor Management System -->
-                    <article class="project-card reveal" data-category="fullstack-iot">
-                        <div class="project-media">
-                            <img src="assets/images/projects/IndiaInnovates.webp" alt="GreenWave Emergency Corridor Management System" data-caption="GreenWave: Emergency Corridor Management System (India Innovates 2026)" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge project-badge--emerald">India Innovates 2026 Finalist</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Apr – Jun 2026</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">GreenWave: Emergency Corridor Management System</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Automated emergency green-corridor pipeline using ESP8266 + u-blox Neo-6M GPS (4s auto-activation), FastAPI + OSMnx/NetworkX road-network routing, cascading traffic signal control, and hospital/dispatch alerts.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">FastAPI</span>
-                                <span class="tech-pill">OSMnx</span>
-                                <span class="tech-pill">ESP8266</span>
-                                <span class="tech-pill">Neo-6M GPS</span>
-                                <span class="tech-pill">Smart Traffic</span>
-                            </div>
-                            <div class="pt-3 border-t border-[#142033] font-mono-tech text-xs text-[#94a3b8]">
-                                India Innovates 2026 &bull; Civic Routing Prototype
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- 10. E-Lab: Full-Stack Laboratory Management Platform -->
-                    <article class="project-card reveal" data-category="fullstack-iot">
-                        <div class="project-media">
-                            <img src="assets/images/projects/E_Lab_Presentation.webp" alt="E-Lab Full-Stack Laboratory Management Platform" data-caption="E-Lab: Full-Stack Laboratory Management Platform" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge project-badge--emerald">Live Campus ERP</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Jan – Jun 2026</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">E-Lab: Full-Stack Laboratory Management Platform</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Role-based (Admin/Faculty/Student) university lab platform for component lifecycle tracking, after-hours access approvals, and live ESP8266 + RFID-RC522 lab-entry telemetry.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">Next.js 14</span>
-                                <span class="tech-pill">PostgreSQL</span>
-                                <span class="tech-pill">Drizzle ORM</span>
-                                <span class="tech-pill">ESP8266</span>
-                                <span class="tech-pill">RFID-RC522</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <button type="button" class="project-link-btn" data-doc-open="elab-deck-pptx">
-                                    <i class="fas fa-file-powerpoint" aria-hidden="true"></i>
-                                    <span>View Deck</span>
-                                </button>
-                                <a href="https://elabsaset.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fas fa-globe" aria-hidden="true"></i>
-                                    <span>Live</span>
-                                </a>
-                                <a href="https://github.com/NirmalyaASinha/ElectronicLab" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                                    <i class="fab fa-github" aria-hidden="true"></i>
-                                    <span>GitHub</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- 11. SPARK.AI: Edge-to-Cloud Multi-Node Security Architecture -->
-                    <article class="project-card reveal" data-category="fullstack-iot">
-                        <div class="project-media">
-                            <img src="https://placehold.co/800x450/0a0f1c/00e5ff?text=SPARK.AI+Edge-to-Cloud" alt="SPARK.AI Edge-to-Cloud Multi-Node Security Architecture" data-caption="SPARK.AI: Edge-to-Cloud Multi-Node Security Architecture" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge">Edge-to-Cloud IoT</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Feb 2026</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">SPARK.AI: Edge-to-Cloud Multi-Node Security Architecture</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Multi-node surveillance and security architecture for commercial kitchens/restaurants connecting ESP32 edge nodes to a centralized cloud monitoring layer.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">ESP32</span>
-                                <span class="tech-pill">Edge-to-Cloud</span>
-                                <span class="tech-pill">Systems Design</span>
-                                <span class="tech-pill">IoT Security</span>
-                            </div>
-                            <div class="pt-3 border-t border-[#142033] font-mono-tech text-xs text-[#94a3b8]">
-                                Edge-to-Cloud Prototype Architecture
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- 12. Smart Herd: Automated Livestock Monitoring with MYOSA -->
-                    <article class="project-card reveal" data-category="fullstack-iot">
-                        <div class="project-media">
-                            <img src="https://placehold.co/800x450/0a0f1c/00e5ff?text=Smart+Herd+MYOSA" alt="Smart Herd Automated Livestock Monitoring with MYOSA" data-caption="Smart Herd: Automated Livestock Monitoring with MYOSA" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge">IoT Hardware Prototype</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">Oct 2024 – Feb 2025</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">Smart Herd: Automated Livestock Monitoring with MYOSA</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Where the hardware journey started: low-cost farm IoT prototype on the MYOSA (ESP32) board fusing an MPU6050 6-axis IMU and SI7021 environmental sensing for early movement-anomaly and heat-stress alerts.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">MYOSA</span>
-                                <span class="tech-pill">ESP32</span>
-                                <span class="tech-pill">MPU6050</span>
-                                <span class="tech-pill">SI7021</span>
-                                <span class="tech-pill">IoT</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <button type="button" class="project-link-btn" data-doc-open="smart-herd-docx">
-                                    <i class="fas fa-file-word" aria-hidden="true"></i>
-                                    <span>View Report</span>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- 13. ExpenseAI: Edge-LLM Financial Auditing -->
-                    <article class="project-card reveal" data-category="fullstack-iot">
-                        <div class="project-media">
-                            <img src="https://placehold.co/800x450/0a0f1c/10b981?text=ExpenseAI+Edge+LLM" alt="ExpenseAI Autonomous Financial Auditing System" data-caption="ExpenseAI: Autonomous Financial Auditing via Edge-Deployed LLMs" loading="lazy">
-                        </div>
-                        <div class="p-5 flex flex-col flex-1">
-                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                                <span class="project-badge project-badge--emerald">Edge LLM &bull; Demo Video</span>
-                                <span class="font-mono-tech text-xs font-medium text-[#94a3b8] whitespace-nowrap">2026</span>
-                            </div>
-                            <h3 class="text-lg font-bold text-white mb-2 leading-snug">ExpenseAI: Edge-LLM Financial Auditing</h3>
-                            <p class="text-sm text-[#cbd5e1] leading-relaxed mb-4 flex-1">
-                                Autonomous financial auditing and state management system powered by edge-deployed Large Language Models—combining local inference, structured receipt parsing, and a live browser analytics dashboard.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5 mb-4">
-                                <span class="tech-pill">Edge LLM</span>
-                                <span class="tech-pill">Python</span>
-                                <span class="tech-pill">State Management</span>
-                                <span class="tech-pill">Web App</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 pt-3 border-t border-[#142033]">
-                                <button type="button" class="project-link-btn" data-doc-open="expenseai-demo-mp4">
-                                    <i class="fas fa-play" aria-hidden="true"></i>
-                                    <span>Watch Demo</span>
-                                </button>
-                                <button type="button" class="project-link-btn" data-doc-open="expenseai-paper-pdf">
-                                    <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                                    <span>Read Paper</span>
-                                </button>
-                            </div>
-                        </div>
-                    </article>
-
-                </div>
+                <figure class="surface-card is-interactive overflow-hidden">
+                    <button type="button" class="media-trigger-btn" aria-label="Zoom LearnVLSI and VPlay interface photo">
+                        <img src="assets/images/projects/LearnVLSI_Vplay.webp" alt="LearnVLSI and VPlay browser-based Verilog playground" data-caption="LearnVLSI & VPlay • Browser-based Verilog arena & waveform simulator" loading="lazy">
+                    </button>
+                    <figcaption class="p-3.5 text-xs sm:text-sm font-medium">LearnVLSI &amp; VPlay &bull; Browser-Based Verilog &amp; eSim Studio</figcaption>
+                </figure>
             </div>
         </section>
 
-        <!-- Technical Dossier & Media Vault Section -->
-        <section id="documents" class="py-20 sm:py-24 px-4 sm:px-8 md:px-14 lg:px-20 section-bg">
-            <div class="container mx-auto">
-                <div class="text-center mb-10 reveal">
-                    <div class="section-heading-wrap">
-                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Technical Dossier &amp; <span class="highlight">Media Vault</span></h2>
+        <!-- Key Milestones Changelog -->
+        <section class="container mx-auto max-w-5xl mt-16 reveal" aria-labelledby="milestones-heading">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-5">
+                <div>
+                    <p class="font-mono-tech text-xs uppercase tracking-widest highlight mb-1">Track Record</p>
+                    <h2 id="milestones-heading" class="text-2xl sm:text-3xl font-bold">Key Milestones</h2>
+                </div>
+                <a href="projects.html" class="text-sm font-medium highlight hover:underline inline-flex items-center gap-1.5">
+                    <span>Explore all projects</span>
+                    <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i>
+                </a>
+            </div>
+
+            <div class="surface-card overflow-hidden">
+                <a href="projects.html?cat=vlsi-asic" class="milestone-row">
+                    <span class="font-mono-tech text-xs font-semibold highlight">2026 – Present</span>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold">Founder &amp; Lead Developer — LearnVLSI (VPlay &amp; eSim)</h3>
+                        <p class="text-xs sm:text-sm" style="color: var(--text-muted);">Browser-based 90-day Verilog arena, interactive K-Map/FSM simulator &amp; SkyWater 130nm RTL-to-GDSII pipeline.</p>
                     </div>
-                    <p class="text-[#94a3b8] mt-4 max-w-2xl mx-auto text-sm sm:text-base">
-                        Primary technical reports, architecture decks, ideation dossiers, and system walkthroughs—documented proof behind every prototype, podium, and silicon run.
-                    </p>
-                </div>
+                    <span class="tech-badge whitespace-nowrap">Live Platform</span>
+                </a>
 
-                <!-- Category Filter Pills -->
-                <div id="doc-filters" class="flex flex-wrap justify-center gap-2.5 mb-10 reveal" role="group" aria-label="Filter documents and media by type">
-                    <button type="button" class="filter-tab active" data-doc-filter="all" aria-pressed="true">All (12)</button>
-                    <button type="button" class="filter-tab" data-doc-filter="pdf" aria-pressed="false">PDF Reports</button>
-                    <button type="button" class="filter-tab" data-doc-filter="pptx" aria-pressed="false">Presentations</button>
-                    <button type="button" class="filter-tab" data-doc-filter="docs-video" aria-pressed="false">Docs &amp; Video</button>
-                </div>
+                <a href="projects.html?cat=vlsi-asic" class="milestone-row">
+                    <span class="font-mono-tech text-xs font-semibold highlight">2026</span>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold">PicoRV32 RISC-V SoC — Open-Source Sky130 RTL-to-GDSII Tape-Out</h3>
+                        <p class="text-xs sm:text-sm" style="color: var(--text-muted);">1.00 mm² die at 50 MHz (+13.76 ns setup slack), 24,441 logic cells, 0 Magic DRC &amp; 0 Netgen LVS errors.</p>
+                    </div>
+                    <span class="tech-badge whitespace-nowrap">0 DRC / 0 LVS</span>
+                </a>
 
-                <!-- Documents & Media Grid -->
-                <div id="documents-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <a href="projects.html?cat=fpga-ai" class="milestone-row">
+                    <span class="font-mono-tech text-xs font-semibold highlight">Jun – Jul 2026</span>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold">Summer Research Intern — IIT (BHU) Varanasi (VSSC Sponsored)</h3>
+                        <p class="text-xs sm:text-sm" style="color: var(--text-muted);">Deployed 99.7%+ accuracy motor-fault Edge AI models on PYNQ-Z2 and Xilinx ZCU-104 FPGAs under Dr. Priya Ranjan Muduli.</p>
+                    </div>
+                    <span class="tech-badge whitespace-nowrap">VSSC Research</span>
+                </a>
 
-                    <!-- 1. Motor Fault Detection Technical Report (PDF) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pdf" data-doc-id="motor-fault-report-pdf">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pdf">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i> PDF Report
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">13.54 MB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            Data-Driven Fault Detection in Electric Motors (RES-VSSC-2025-015)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            10-page IIT (BHU) / VSSC technical report on CWRU spectrograms &amp; ZCU-104 FPGA inference.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="motor-fault-report-pdf">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/greenwave_latex_source_bundle_revised.pdf" download="Motor_Fault_Detection_Technical_Report.pdf" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
+                <a href="projects.html?cat=defence-uavs" class="milestone-row">
+                    <span class="font-mono-tech text-xs font-semibold highlight">Apr 2026</span>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold">1st Runner Up (484 Participants) — IEEE CRAFTHON 2026</h3>
+                        <p class="text-xs sm:text-sm" style="color: var(--text-muted);">ArmourTrack: ESP32, RFID, GPS, RSA-signed QR &amp; SHA-256 hash-chain defence asset accountability terminal.</p>
+                    </div>
+                    <span class="tech-badge whitespace-nowrap">2nd Prize</span>
+                </a>
 
-                    <!-- 2. Motor Fault Detection Presentation Deck (PPTX) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pptx" data-doc-id="motor-fault-deck-pptx">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pptx">
-                                <i class="fas fa-file-powerpoint" aria-hidden="true"></i> PPTX Deck
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">5.64 MB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            Motor Fault Detection Presentation Deck (VSSC / IIT BHU)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            10-slide research review covering model quantization, PYNQ-Z2 &amp; ZCU-104 validation.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="motor-fault-deck-pptx">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/Fault_Detection_Report_Revised.pdf" download="Motor_Fault_Detection_Presentation.pptx" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
+                <a href="projects.html?cat=defence-uavs" class="milestone-row">
+                    <span class="font-mono-tech text-xs font-semibold highlight">2026</span>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold">Top 10 Finalist (~400 Participants) — SIH 2026 (PS 26025)</h3>
+                        <p class="text-xs sm:text-sm" style="color: var(--text-muted);">Trishuli: ~Rs. 1,100/node ESP8266 mesh + Raspberry Pi Edge ML mine-subsidence warning (94–97% accuracy, 0.2–0.3 ms latency).</p>
+                    </div>
+                    <span class="tech-badge whitespace-nowrap">SIH Top 10</span>
+                </a>
 
-                    <!-- 3. ArmourTrack Technical Project Report (PDF) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pdf" data-doc-id="armourtrack-full-pdf">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pdf">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i> PDF Report
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">50 KB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            ArmourTrack Technical Project Report (8-Page Dossier)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            DefenceTech PS9 specification: RSA QR, RFID custody, ESP32 GPS &amp; SHA-256 hash-chain.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="armourtrack-full-pdf">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/Copy%20of%20Smart%20Herd_%20Revolutionizing%20Livestock%20Monitoring%20with%20MYOSA.docx" download="ArmourTrack_Full_Technical_Report.pdf" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
+                <a href="projects.html?cat=defence-uavs" class="milestone-row">
+                    <span class="font-mono-tech text-xs font-semibold highlight">Feb 2026</span>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold">3rd Rank (80 Teams) — HackTheSpring'26, GEC Gandhinagar</h3>
+                        <p class="text-xs sm:text-sm" style="color: var(--text-muted);">Secure POS System: Hardware authentication flow for tamper-resistant point-of-sale verification.</p>
+                    </div>
+                    <span class="tech-badge whitespace-nowrap">3rd Place</span>
+                </a>
 
-                    <!-- 4. ArmourTrack Showcase Slides (PDF) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pdf" data-doc-id="armourtrack-showcase-pdf">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pdf">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i> PDF Slides
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">136 KB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            ArmourTrack Showcase Presentation (PDF Export)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            6-page CRAFTATHON 2026 winning pitch slides exported for instant in-browser review.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="armourtrack-showcase-pdf">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/ArmourTrack_Technical_Project_Report.pdf" download="ArmourTrack_Showcase_Slides.pdf" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 5. ArmourTrack Hackathon Deck (PPTX) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pptx" data-doc-id="armourtrack-deck-pptx">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pptx">
-                                <i class="fas fa-file-powerpoint" aria-hidden="true"></i> PPTX Deck
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">42 KB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            ArmourTrack Hackathon Slide Deck (CRAFTATHON 2026)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            Original 6-slide PowerPoint deck for 2nd Prize Winner (171 teams, Gandhinagar Univ.).
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="armourtrack-deck-pptx">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/armourtrack_showcase.pdf" download="ArmourTrack_Hackathon_Deck.pptx" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 6. DROMAT IEEE Technical Report (PDF) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pdf" data-doc-id="dromat-report-pdf">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pdf">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i> PDF Report
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">2.15 MB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            DROMAT: AI-Powered Disaster Response Drone Report (IEEE)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            5-page two-column paper on A* pathfinding, YOLOv8 perception &amp; 868 MHz LoRa hub.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="dromat-report-pdf">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/DroneVision_SWARM_Two_Column_Report.pdf" download="DROMAT_IEEE_Technical_Report.pdf" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 7. SIH 2025 Idea Pitch Deck (PDF) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pdf" data-doc-id="sih2025-deck-pdf">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pdf">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i> PDF Deck
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">3.45 MB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            SIH 2025 Idea Pitch Deck — Disaster Response Drone (SIH25047)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            6-slide Smart India Hackathon presentation for Team DROMAT (6th Place Internal RRU).
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="sih2025-deck-pdf">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/SIH2025-IDEAFinal.pdf" download="SIH2025_DROMAT_Pitch_Deck.pdf" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 8. DroneVision -> SWARM System Project Record (PDF) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pdf" data-doc-id="dronevision-swarm-pdf">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pdf">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i> PDF Record
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">2.65 MB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            DroneVision &rarr; SWARM System Project Record (RRU)
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            3-page D_One project record covering flight metrics &amp; Governor of TN showcase.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="dronevision-swarm-pdf">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/ELab_Project_Showcase.pptx" download="DroneVision_SWARM_Project_Record.pdf" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 9. E-Lab Campus ERP Presentation (PPTX) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pptx" data-doc-id="elab-deck-pptx">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pptx">
-                                <i class="fas fa-file-powerpoint" aria-hidden="true"></i> PPTX Deck
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">578 KB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            E-Lab: Full-Stack Laboratory Management Platform Deck
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            9-slide showcase covering Next.js 14 ERP, PostgreSQL/Drizzle &amp; ESP8266 RFID entry.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="elab-deck-pptx">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/Electric_Motor_Fault_Detection_Project_Presentation.pptx" download="ELab_Platform_Showcase.pptx" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 10. Smart Herd (MYOSA) Ideation Document (DOCX) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="docs-video" data-doc-id="smart-herd-docx">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--docx">
-                                <i class="fas fa-file-word" aria-hidden="true"></i> DOCX Doc
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">282 KB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            Smart Herd (MYOSA) Livestock Monitoring Ideation Document
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            EOI &amp; hardware ideation dossier for MYOSA ESP32 + MPU6050 + SI7021 livestock prototype.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="smart-herd-docx">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/documents/DROMAT_Report%20(1).pdf" download="Smart_Herd_MYOSA_Ideation.docx" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 11. ExpenseAI Technical Paper (PDF) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="pdf" data-doc-id="expenseai-paper-pdf">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--pdf">
-                                <i class="fas fa-file-pdf" aria-hidden="true"></i> PDF Paper
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">663 KB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            ExpenseAI: Autonomous Financial Auditing via Edge LLMs
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            4-page LaTeX technical paper on autonomous auditing and state management with Edge LLMs.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="expenseai-paper-pdf">
-                                <i class="fas fa-eye" aria-hidden="true"></i>
-                                <span>View / Preview</span>
-                            </button>
-                            <a href="./assets/media/ExpenseAI.mp4" download="ExpenseAI_Technical_Paper.pdf" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- 12. ExpenseAI Interactive System Walkthrough (MP4 Video) -->
-                    <article class="doc-card p-5 reveal" data-doc-category="docs-video" data-doc-id="expenseai-demo-mp4">
-                        <div class="flex items-center justify-between gap-2 mb-3">
-                            <span class="doc-type-badge doc-type-badge--mp4">
-                                <i class="fas fa-film" aria-hidden="true"></i> MP4 Video
-                            </span>
-                            <span class="font-mono-tech text-xs font-medium text-[#94a3b8]">135.4 MB</span>
-                        </div>
-                        <h3 class="text-base sm:text-lg font-bold text-white mb-1.5 leading-snug">
-                            ExpenseAI — Interactive Browser System Walkthrough
-                        </h3>
-                        <p class="text-xs text-[#94a3b8] mb-5 flex-1">
-                            <i class="fas fa-link mr-1 highlight" aria-hidden="true"></i>
-                            Full screen-recorded demo of ExpenseAI receipt parsing, auditing, and state analytics.
-                        </p>
-                        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-[#142033]">
-                            <button type="button" class="doc-action-btn doc-action-btn--primary" data-doc-open="expenseai-demo-mp4">
-                                <i class="fas fa-play" aria-hidden="true"></i>
-                                <span>Watch Demo</span>
-                            </button>
-                            <a href="./assets/documents/armourtrack_showcase.pptx" download="ExpenseAI_Demo_Walkthrough.mp4" class="doc-action-btn">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download</span>
-                            </a>
-                        </div>
-                    </article>
-
-                </div>
+                <a href="#highlights" class="milestone-row">
+                    <span class="font-mono-tech text-xs font-semibold highlight">2025</span>
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold">Showcased Autonomous UAV to Hon'ble Governor of Tamil Nadu</h3>
+                        <p class="text-xs sm:text-sm" style="color: var(--text-muted);">D_One (DroneVision &rarr; SWARM): Custom Pixhawk X-frame quadcopter &amp; multi-drone Gazebo/MAVLink swarm testbed.</p>
+                    </div>
+                    <span class="tech-badge whitespace-nowrap">Governor Showcase</span>
+                </a>
             </div>
         </section>
 
-        <!-- Dedicated Highlights Gallery Section -->
-        <section id="highlights" class="py-20 sm:py-24 px-4 sm:px-8 md:px-14 lg:px-20">
-            <div class="container mx-auto">
-                <div class="text-center mb-14 reveal">
-                    <div class="section-heading-wrap">
-                        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Highlights &amp; <span class="highlight">Milestones</span></h2>
+        <!-- Continue Exploring Route Cards -->
+        <section class="container mx-auto max-w-5xl mt-12 reveal" aria-label="Explore portfolio sections">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <a href="projects.html" class="surface-card is-interactive p-6 flex flex-col justify-between">
+                    <div>
+                        <p class="font-mono-tech text-xs highlight mb-2">01 / WORKBENCH</p>
+                        <h3 class="text-lg font-bold mb-1.5">Projects &amp; Case Studies</h3>
+                        <p class="text-sm" style="color: var(--text-muted);">Interactive Sky130 RTL-to-GDSII explorer, Logic Analyzer strip, and 14 hardware/software builds.</p>
                     </div>
-                    <p class="text-[#94a3b8] mt-4 max-w-2xl mx-auto text-sm sm:text-base">
-                        Key moments along the arc—from national hackathon podiums and judge demos to live FPGA testbenches and IIT (BHU) research certification. Click any frame to inspect.
-                    </p>
-                </div>
+                    <span class="text-xs font-semibold highlight mt-4 inline-flex items-center gap-1.5">Open Projects <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/highlights/armourtrack-prize.png" alt="Winning 2nd Prize for ArmourTrack at CRAFTATHON 2026" data-caption="CRAFTATHON 2026 Podium &bull; 2nd Prize (171 Teams) for ArmourTrack hardware custody" class="object-[50%_25%]" loading="lazy">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            CRAFTATHON 2026 Podium &bull; 2nd Prize (171 Teams) for ArmourTrack
-                        </figcaption>
-                    </figure>
+                <a href="about.html" class="surface-card is-interactive p-6 flex flex-col justify-between">
+                    <div>
+                        <p class="font-mono-tech text-xs highlight mb-2">02 / BACKGROUND</p>
+                        <h3 class="text-lg font-bold mb-1.5">About, Research &amp; Skills</h3>
+                        <p class="text-sm" style="color: var(--text-muted);">IIT (BHU) &amp; RRU DFA research, leadership roles, certifications, and photo highlights.</p>
+                    </div>
+                    <span class="text-xs font-semibold highlight mt-4 inline-flex items-center gap-1.5">Read Story <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
 
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/highlights/sih2026-presentation.png" alt="Presenting Trishuli Early Warning System to Judges at SIH 2026" data-caption="SIH 2026 National Finals &bull; Pitching Trishuli's ESP8266 mesh &amp; Edge ML warning architecture" class="object-[50%_25%]" loading="lazy">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            SIH 2026 National Finals &bull; Pitching Trishuli Early Warning to Judges
-                        </figcaption>
-                    </figure>
-
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/highlights/zcu104-setup.png" alt="Edge AI Motor Fault Detection Setup on Xilinx ZCU-104 FPGA" data-caption="VSSC Edge AI Testbench &bull; Live motor-fault inference on Xilinx ZCU-104 FPGA" loading="lazy">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            VSSC Edge AI Testbench &bull; Live inference on Xilinx ZCU-104 FPGA
-                        </figcaption>
-                    </figure>
-
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/highlights/de10-lite-presentation.png" alt="Delivering Digital Systems &amp; FPGA Session on DE-10 Lite" data-caption="Digital Systems Lab &bull; Demonstrating RTL &amp; FPGA prototyping on Intel DE-10 Lite" loading="lazy">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            Digital Systems Lab &bull; RTL &amp; FPGA prototyping on Intel DE-10 Lite
-                        </figcaption>
-                    </figure>
-
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/highlights/iitbhu-certificate.png" alt="Receiving IIT (BHU) Varanasi Internship Certificate from Dr. Priya Ranjan Muduli" data-caption="IIT (BHU) Varanasi &bull; Research internship completion under Dr. Priya Ranjan Muduli" class="object-[50%_25%]" loading="lazy">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            IIT (BHU) Varanasi &bull; Research internship certificate from Dr. Priya Ranjan Muduli
-                        </figcaption>
-                    </figure>
-
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/highlights/1753798081726.jpg" alt="Showcasing D_One custom quadcopter to the Hon'ble Governor of Tamil Nadu" data-caption="D_One UAV Showcase &bull; Presenting custom Pixhawk quadcopter to the Hon'ble Governor of Tamil Nadu" class="object-[50%_25%]" loading="lazy" onerror="this.onerror=null;this.src='assets/images/highlights/Governor_showcase.jpg';">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            D_One UAV Showcase &bull; Presented to Hon'ble Governor of Tamil Nadu
-                        </figcaption>
-                    </figure>
-
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/highlights/1772700154695.jpg" alt="Receiving 3rd Rank Certificate of Merit at HackTheSpring '26, GEC Gandhinagar" data-caption="HackTheSpring '26 &bull; 3rd Rank Certificate of Merit at GEC Gandhinagar (Feb 2026)" class="object-[50%_25%]" loading="lazy" onerror="this.onerror=null;this.src='assets/images/projects/GEC_winning_prize.webp';">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            HackTheSpring '26 &bull; 3rd Rank Certificate of Merit (GEC Gandhinagar)
-                        </figcaption>
-                    </figure>
-
-                    <figure class="highlight-card reveal">
-                        <div class="highlight-media">
-                            <img src="assets/images/projects/LearnVLSI_Vplay.webp" alt="LearnVLSI and VPlay browser-based Verilog playground interface" data-caption="LearnVLSI &amp; VPlay &bull; Browser-based Verilog simulation &amp; waveform learning platform" loading="lazy">
-                        </div>
-                        <figcaption class="p-3.5 text-xs sm:text-sm font-medium text-[#cbd5e1] leading-snug">
-                            LearnVLSI &amp; VPlay &bull; Browser-based Verilog simulator &amp; waveform suite
-                        </figcaption>
-                    </figure>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 sm:py-24 px-4 sm:px-8 md:px-14 lg:px-20 section-bg">
-            <div class="container mx-auto text-center max-w-3xl reveal">
-                <div class="section-heading-wrap mb-4">
-                    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Contact <span class="highlight">Me</span></h2>
-                </div>
-                <p class="text-[#cbd5e1] my-7 leading-relaxed text-base sm:text-lg">
-                    Have a semiconductor, FPGA, hardware security, or Edge AI collaboration in mind? Feel free to reach out—I am always open to discussing new research, silicon architectures, and engineering opportunities.
-                </p>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
-                    <a href="mailto:n.nirmalya.n@gmail.com" class="editorial-card px-5 py-4 flex items-center justify-center gap-3 text-[#f8fafc] hover:text-[#00e5ff] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]">
-                        <i class="fas fa-envelope highlight text-lg flex-shrink-0" aria-hidden="true"></i>
-                        <div class="text-left min-w-0">
-                            <div class="text-xs text-[#94a3b8]">Personal Email</div>
-                            <div class="font-medium text-sm sm:text-base break-all sm:break-normal">n.nirmalya.n@gmail.com</div>
-                        </div>
-                    </a>
-
-                    <a href="mailto:24beevdt031@student.rru.ac.in" class="editorial-card px-5 py-4 flex items-center justify-center gap-3 text-[#f8fafc] hover:text-[#00e5ff] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]">
-                        <i class="fas fa-university highlight text-lg flex-shrink-0" aria-hidden="true"></i>
-                        <div class="text-left min-w-0">
-                            <div class="text-xs text-[#94a3b8]">Institutional Email</div>
-                            <div class="font-medium text-sm sm:text-base break-all sm:break-normal">24beevdt031@student.rru.ac.in</div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="flex flex-wrap justify-center gap-3 mt-8">
-                    <a href="https://www.linkedin.com/in/nirmalya-sinha-8b7a37318/" target="_blank" rel="noopener noreferrer" class="editorial-card px-4 py-2.5 inline-flex items-center gap-2 text-sm font-medium text-[#cbd5e1] hover:text-[#00e5ff]" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin-in highlight" aria-hidden="true"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://github.com/NirmalyaASinha" target="_blank" rel="noopener noreferrer" class="editorial-card px-4 py-2.5 inline-flex items-center gap-2 text-sm font-medium text-[#cbd5e1] hover:text-white" aria-label="GitHub">
-                        <i class="fab fa-github highlight" aria-hidden="true"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="https://learnvlsi.in" target="_blank" rel="noopener noreferrer" class="editorial-card px-4 py-2.5 inline-flex items-center gap-2 text-sm font-medium text-[#cbd5e1] hover:text-[#00e5ff]" aria-label="LearnVLSI">
-                        <i class="fas fa-microchip highlight" aria-hidden="true"></i>
-                        <span>LearnVLSI</span>
-                    </a>
-                    <a href="https://www.youtube.com/@Nirmalya-Sinha" target="_blank" rel="noopener noreferrer" class="editorial-card px-4 py-2.5 inline-flex items-center gap-2 text-sm font-medium text-[#cbd5e1] hover:text-red-400" aria-label="YouTube">
-                        <i class="fab fa-youtube text-red-400" aria-hidden="true"></i>
-                        <span>YouTube</span>
-                    </a>
-                </div>
+                <a href="vault.html" class="surface-card is-interactive p-6 flex flex-col justify-between">
+                    <div>
+                        <p class="font-mono-tech text-xs highlight mb-2">03 / ARTIFACTS</p>
+                        <h3 class="text-lg font-bold mb-1.5">Technical Vault</h3>
+                        <p class="text-sm" style="color: var(--text-muted);">View CV, PicoRV32 31-page ASIC report, VSSC motor-fault papers, decks, and demos inline.</p>
+                    </div>
+                    <span class="text-xs font-semibold highlight mt-4 inline-flex items-center gap-1.5">Open Vault <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="py-8 bg-black/90 text-center text-[#94a3b8] text-sm border-t border-[#142033]">
-        <p>&copy; 2026 Nirmalya Sinha. All Rights Reserved.</p>
-    </footer>
-
     <!-- Image Lightbox Modal -->
-    <div id="image-lightbox" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex-col items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Image preview">
-        <button id="lightbox-close" type="button" class="z-10 absolute top-5 right-5 w-11 h-11 flex items-center justify-center rounded-full bg-black/70 border border-[#142033] backdrop-blur-sm text-white/90 hover:text-white hover:border-[#00e5ff]/60 text-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff] transition-colors" aria-label="Close image preview">
+    <div id="image-lightbox" class="modal-backdrop flex-col" role="dialog" aria-modal="true" aria-label="Image preview">
+        <button id="lightbox-close" type="button" class="icon-control-btn absolute top-5 right-5 text-xl" aria-label="Close image preview">
             <i class="fas fa-times" aria-hidden="true"></i>
         </button>
-        <img id="lightbox-img" src="" alt="" class="max-w-[92vw] max-h-[82vh] rounded-xl shadow-2xl object-contain border border-[#142033]">
-        <p id="lightbox-caption" class="mt-4 text-sm sm:text-base text-[#cbd5e1] text-center max-w-2xl px-4"></p>
+        <img id="lightbox-img" src="" alt="" class="max-w-[92vw] max-h-[80vh] rounded-xl shadow-2xl object-contain">
+        <p id="lightbox-caption" class="mt-4 text-sm text-center max-w-2xl px-4 text-white"></p>
     </div>
 
-    <!-- Interactive Document & Media Viewer Modal -->
-    <div id="doc-viewer-modal"
-         class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md items-center justify-center p-2 sm:p-5"
-         role="dialog"
-         aria-modal="true"
-         aria-labelledby="doc-viewer-title">
+    <footer class="py-7 px-4 text-center text-xs sm:text-sm">
+        <p>&copy; 2026 Nirmalya Sinha &bull; VLSI, FPGA Edge AI &amp; Hardware Security</p>
+    </footer>
 
-        <div id="doc-viewer-panel"
-             class="relative w-full max-w-6xl h-[90vh] h-[90dvh] flex flex-col rounded-2xl overflow-hidden bg-[#0a0f1c] border border-[#142033] shadow-2xl">
-
-            <!-- Modal Header & Toolbar -->
-            <div class="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-b border-[#142033] bg-[#05080f]">
-                <div class="flex items-center gap-3 flex-1 min-w-0">
-                    <span id="doc-viewer-badge" class="doc-type-badge doc-type-badge--pdf flex-shrink-0">PDF</span>
-                    <div class="min-w-0">
-                        <h3 id="doc-viewer-title" class="text-sm sm:text-base font-bold text-white truncate">
-                            Document Title
-                        </h3>
-                        <p id="doc-viewer-meta" class="font-mono-tech text-xs text-[#94a3b8] truncate">
-                            Related Project &bull; File Size
-                        </p>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-2 flex-shrink-0">
-                    <button id="doc-viewer-fullscreen"
-                            type="button"
-                            class="doc-action-btn"
-                            title="Toggle fullscreen"
-                            aria-label="Toggle fullscreen viewer">
-                        <i class="fas fa-expand" aria-hidden="true"></i>
-                        <span class="hidden sm:inline">Fullscreen</span>
-                    </button>
-                    <a id="doc-viewer-newtab"
-                       href="#"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="doc-action-btn"
-                       title="Open in new tab">
-                        <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                        <span class="hidden sm:inline">New Tab</span>
-                    </a>
-                    <a id="doc-viewer-download"
-                       href="#"
-                       download
-                       class="doc-action-btn doc-action-btn--primary"
-                       title="Download file">
-                        <i class="fas fa-download" aria-hidden="true"></i>
-                        <span class="hidden sm:inline">Download</span>
-                    </a>
-                    <button id="doc-viewer-close"
-                            type="button"
-                            class="w-9 h-9 inline-flex items-center justify-center rounded-lg border border-[#142033] text-[#cbd5e1] hover:bg-[#0f172a] hover:text-white hover:border-[#00e5ff]/50 transition-colors"
-                            aria-label="Close document viewer">
-                        <i class="fas fa-times text-base" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Modal Stage -->
-            <div id="doc-viewer-stage" class="relative flex-1 bg-black overflow-hidden flex items-center justify-center">
-
-                <!-- 1. PDF Embedded Viewer -->
-                <div id="viewer-pdf-wrap" class="hidden w-full h-full flex-col">
-                    <iframe id="viewer-pdf-frame"
-                            src=""
-                            title="Embedded PDF document viewer"
-                            class="w-full flex-1 border-0 bg-[#05080f]">
-                    </iframe>
-                    <div class="px-4 py-2 text-xs text-[#94a3b8] bg-[#05080f] border-t border-[#142033] flex flex-wrap items-center justify-between gap-2">
-                        <span>If the PDF does not render inline on your mobile browser, use <strong class="text-white">New Tab</strong> or <strong class="text-white">Download</strong> above.</span>
-                        <a id="viewer-pdf-fallback-link" href="#" target="_blank" rel="noopener noreferrer" class="highlight font-semibold hover:underline">
-                            Open raw PDF &nearr;
-                        </a>
-                    </div>
-                </div>
-
-                <!-- 2. HTML5 Video Player (ExpenseAI Demo) -->
-                <div id="viewer-video-wrap" class="hidden w-full h-full items-center justify-center p-4 sm:p-8 bg-black">
-                    <video id="viewer-video-player"
-                           controls
-                           playsinline
-                           preload="metadata"
-                           class="w-full h-full max-h-full rounded-xl shadow-2xl bg-black outline-none border border-[#142033]">
-                        <source id="viewer-video-source" src="" type="video/mp4">
-                        Your browser does not support embedded HTML5 video.
-                    </video>
-                </div>
-
-                <!-- 3. Office Document Preview Card (.pptx / .docx) -->
-                <div id="viewer-office-wrap" class="hidden w-full h-full items-center justify-center p-4 sm:p-8 overflow-y-auto">
-                    <div class="editorial-card max-w-lg w-full p-6 sm:p-8 text-center">
-                        <div id="viewer-office-icon" class="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                            <i class="fas fa-file-powerpoint" aria-hidden="true"></i>
-                        </div>
-                        <h4 id="viewer-office-title" class="text-lg sm:text-xl font-bold text-white mb-1.5">
-                            Presentation File
-                        </h4>
-                        <p id="viewer-office-details" class="font-mono-tech text-xs sm:text-sm text-[#94a3b8] mb-5">
-                            Microsoft PowerPoint (.pptx)
-                        </p>
-
-                        <div class="text-left text-xs sm:text-sm rounded-xl p-4 mb-6 bg-[#05080f] border border-[#142033] text-[#cbd5e1] leading-relaxed">
-                            <p class="font-semibold text-white mb-1">
-                                <i class="fas fa-circle-info highlight mr-1.5" aria-hidden="true"></i>Browser Preview Notice
-                            </p>
-                            <p>
-                                Browsers cannot natively render <code class="font-mono-tech text-[#00e5ff]">.pptx</code> or <code class="font-mono-tech text-[#00e5ff]">.docx</code> files offline or from a local static URL. Download the file directly or open it with Microsoft Office Online once hosted on a public HTTPS domain.
-                            </p>
-                            <p id="viewer-office-local-note" class="hidden mt-2 text-amber-300 font-medium">
-                                Local/private origin detected: Office Online requires a publicly accessible URL. Use Download below.
-                            </p>
-                        </div>
-
-                        <div class="flex flex-wrap items-center justify-center gap-3">
-                            <a id="viewer-office-download" href="#" download class="doc-action-btn doc-action-btn--primary px-5 py-2.5 text-sm">
-                                <i class="fas fa-download" aria-hidden="true"></i>
-                                <span>Download File</span>
-                            </a>
-                            <a id="viewer-office-online"
-                               href="#"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               class="doc-action-btn px-5 py-2.5 text-sm">
-                                <i class="fas fa-up-right-from-square" aria-hidden="true"></i>
-                                <span>Open in Office Online</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript -->
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/script.js" defer></script>
 </body>
 </html>

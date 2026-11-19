@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>Technical Vault | Nirmalya Sinha</title>
+    <meta name="description" content="Technical Vault of Nirmalya Sinha — View and download CV, PicoRV32 Sky130 RTL-to-GDSII 31-page report, VSSC motor-fault papers, hackathon decks, and video demos.">
+
+    <script>
+        (function () {
+            var root = document.documentElement;
+            root.classList.add('js-enabled');
+            var saved = null;
+            try { saved = localStorage.getItem('nirmalya-theme'); } catch (e) {}
+            var theme = (saved === 'light' || saved === 'dark')
+                ? saved
+                : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            root.setAttribute('data-theme', theme);
+            root.style.colorScheme = theme;
+        })();
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <canvas id="circuit-canvas" aria-hidden="true"></canvas>
+
+    <!-- Shared Navigation Header -->
+    <header id="header" class="py-3 px-4 sm:px-8 lg:px-14">
+        <nav class="container mx-auto flex justify-between items-center gap-4" aria-label="Primary Navigation">
+            <a href="index.html" class="text-xl sm:text-2xl font-bold tracking-tight" style="color: var(--text-heading);">
+                Nirmalya<span class="highlight">.</span>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-6">
+                <ul class="flex items-center space-x-6">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li><a href="vault.html" class="nav-link active" aria-current="page">Vault</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+
+                <div class="flex items-center gap-2.5">
+                    <button type="button" data-open-cmd class="icon-control-btn px-3 gap-1.5 text-xs font-mono-tech" aria-label="Open quick navigation palette">
+                        <i class="fas fa-terminal text-[11px]" aria-hidden="true"></i>
+                        <span>⌘K</span>
+                    </button>
+                    <button id="theme-toggle" type="button" class="icon-control-btn" aria-label="Switch theme" aria-pressed="true">
+                        <span class="theme-icon-sun"><i class="fas fa-sun text-sm" aria-hidden="true"></i></span>
+                        <span class="theme-icon-moon"><i class="fas fa-moon text-sm" aria-hidden="true"></i></span>
+                    </button>
+                    <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="btn-primary !py-2 !px-3.5 !min-h-[40px] !text-xs">
+                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i><span>Resume</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex lg:hidden items-center gap-2">
+                <button type="button" onclick="document.getElementById('theme-toggle').click()" class="icon-control-btn" aria-label="Toggle Light or Dark Theme">
+                    <span class="theme-icon-sun"><i class="fas fa-sun text-sm" aria-hidden="true"></i></span>
+                    <span class="theme-icon-moon"><i class="fas fa-moon text-sm" aria-hidden="true"></i></span>
+                </button>
+                <button id="menu-btn" type="button" class="icon-control-btn text-lg" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="lg:hidden mt-3" aria-hidden="true">
+            <ul class="mobile-menu-panel flex flex-col items-center space-y-3 py-5 px-4 shadow-xl">
+                <li><a href="index.html" class="nav-link text-base">Home</a></li>
+                <li><a href="about.html" class="nav-link text-base">About</a></li>
+                <li><a href="projects.html" class="nav-link text-base">Projects</a></li>
+                <li><a href="vault.html" class="nav-link active text-base" aria-current="page">Vault</a></li>
+                <li><a href="contact.html" class="nav-link text-base">Contact</a></li>
+                <li class="pt-2 flex items-center gap-3">
+                    <button type="button" data-open-cmd class="btn-secondary !py-2 !px-4 !text-xs"><span>Search ⌘K</span></button>
+                    <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="btn-primary !py-2 !px-4 !text-xs">
+                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i><span>Resume</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main id="main-content" class="pt-24 pb-20 px-4 sm:px-8 lg:px-14">
+        <div class="container mx-auto max-w-6xl">
+            <div class="pt-8 pb-8">
+                <p class="font-mono-tech text-xs uppercase tracking-widest highlight mb-2">03 / Artifacts</p>
+                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-3">Technical <span class="highlight">Vault</span></h1>
+                <p class="text-sm sm:text-base max-w-2xl" style="color: var(--text-muted);">
+                    Preview PDFs inline, watch system demo videos, or download presentation decks and technical documentation directly.
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div id="doc-filters" class="flex flex-wrap gap-2.5 mb-8" role="group" aria-label="Filter documents by format">
+                <button type="button" class="filter-tab active" data-doc-filter="all" aria-pressed="true">All (14)</button>
+                <button type="button" class="filter-tab" data-doc-filter="pdf" aria-pressed="false">PDF Reports (9)</button>
+                <button type="button" class="filter-tab" data-doc-filter="pptx" aria-pressed="false">Decks (2)</button>
+                <button type="button" class="filter-tab" data-doc-filter="docx" aria-pressed="false">Docs (2)</button>
+                <button type="button" class="filter-tab" data-doc-filter="mp4" aria-pressed="false">Video (1)</button>
+            </div>
+
+            <!-- Documents Grid -->
+            <div id="docs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 1. CV -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 88 KB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">Resume / CV</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">Curriculum Vitae — Nirmalya Sinha</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">B.Tech EE (VLSI Design, 9.05 SGPA) CV covering IIT (BHU) &amp; RRU DFA research, FPGA/RTL projects, hackathon podiums, and certifications.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="cv-nirmalya" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 2. PicoRV32 Report -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 6.6 MB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">Sky130 ASIC</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">PicoRV32 RISC-V SoC: RTL-to-GDSII Report</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">31-page Overleaf/LaTeX engineering report: 50 MHz, 1.00 mm² die, 24,441 logic cells, 0 Magic DRC, 0 Netgen LVS, +13.76 ns setup slack.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="picorv32-report" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/picorv32_rtl_to_gds_overleaf_complete.pdf" download="picorv32_rtl_to_gds_overleaf_complete.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 3. Motor Fault Report -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 13.5 MB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">IIT BHU / VSSC</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">VSSC Motor Fault Detection — Technical Report</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Complete CWRU bearing spectrogram classification study (99.7%+ accuracy) and PYNQ-Z2 / ZCU-104 FPGA deployment.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="motor-fault-report-pdf" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/greenwave_latex_source_bundle_revised.pdf" download="Motor_Fault_Detection_Technical_Report.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 4. Motor Fault Deck -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pptx">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pptx">PPTX &bull; 5.6 MB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">IIT BHU / VSSC</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">VSSC Motor Fault Detection — Project Deck</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Presentation deck detailing Vitis HLS Random Forest IP synthesis and ZCU-104 hardware-in-the-loop inference.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="motor-fault-deck-pptx" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Details</span></button>
+                        <a href="./assets/documents/Fault_Detection_Report_Revised.pdf" download="Motor_Fault_Detection_Presentation.pptx" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 5. ArmourTrack DOCX -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="docx">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--docx">DOCX &bull; 136 KB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">ArmourTrack</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">ArmourTrack — Full Technical Documentation</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Architecture specification for RSA-signed QR, RFID custody, ESP32 + GPS geofencing, and SHA-256 audit ledger.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="armourtrack-full-docx" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Details</span></button>
+                        <a href="./assets/documents/ArmourTrack_Technical_Project_Report.pdf" download="ArmourTrack_Technical_Documentation.docx" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 6. ArmourTrack Brief PDF -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 50 KB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">ArmourTrack</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">ArmourTrack — Technical Project Report</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Condensed engineering report covering hardware authentication flow and tamper-evident custody logging.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="armourtrack-brief-pdf" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/Copy%20of%20Smart%20Herd_%20Revolutionizing%20Livestock%20Monitoring%20with%20MYOSA.docx" download="ArmourTrack_Brief_Report.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 7. ArmourTrack Showcase PDF -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 42 KB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">CRAFTHON 2026</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">ArmourTrack — Hardware Showcase Brief</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Competition pitch and custody-chain verification summary from IEEE CRAFTHON 2026 (1st Runner Up).</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="armourtrack-showcase-pdf" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/armourtrack_showcase.pdf" download="armourtrack_showcase.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 8. DROMAT IEEE PDF -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 2.15 MB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">DROMAT UAV</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">DROMAT — Disaster Response Drone IEEE Paper</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Autonomous Pixhawk + Raspberry Pi relief-delivery UAV with A* pathfinding, YOLOv8, and 868 MHz LoRa telemetry.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="dromat-ieee-pdf" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/DroneVision_SWARM_Two_Column_Report.pdf" download="DROMAT_IEEE_Paper.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 9. DroneVision SWARM PDF -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 2.65 MB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">D_One SWARM</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">D_One &amp; SWARM — Project Record &amp; Deck</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Custom X-frame quadcopter flight telemetry (22.3 min flight, &plusmn;1.5 m waypoint) and Gazebo/SITL MAVLink swarm testbed.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="dronevision-swarm-pdf" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/ELab_Project_Showcase.pptx" download="DroneVision_SWARM_Project_Record.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 10. Trishuli SIH PDF -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 3.45 MB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">SIH 2026</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">Trishuli — SIH 2026 Finalist Proposal</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Top 10 Finalist proposal for ~Rs. 1,100/node ESP8266 Wi-Fi mesh and Raspberry Pi Edge ML mine-subsidence warning.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="trishuli-sih-pdf" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/documents/SIH2025-IDEAFinal.pdf" download="Trishuli_SIH2026_Proposal.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 11. E-Lab Showcase PPTX -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pptx">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pptx">PPTX &bull; 578 KB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">E-Lab ERP</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">E-Lab — Campus Lab ERP Showcase Deck</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Slide deck covering Next.js 14 RBAC portal, PostgreSQL/Drizzle ORM schema, and ESP8266 + RFID-RC522 telemetry.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="elab-showcase-pptx" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Details</span></button>
+                        <a href="./assets/documents/Electric_Motor_Fault_Detection_Project_Presentation.pptx" download="ELab_Platform_Showcase.pptx" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 12. Smart Herd DOCX -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="docx">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--docx">DOCX &bull; 282 KB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">Smart Herd</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">Smart Herd — MYOSA Livestock Ideation</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Sensor-fusion prototype report using MYOSA ESP32, MPU6050 6-axis IMU, and SI7021 temperature/humidity sensing.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="smart-herd-docx" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Details</span></button>
+                        <a href="./assets/documents/DROMAT_Report%20(1).pdf" download="Smart_Herd_MYOSA_Ideation.docx" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 13. ExpenseAI Paper PDF -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="pdf">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--pdf">PDF &bull; 663 KB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">ExpenseAI</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">ExpenseAI — Edge-LLM Financial Paper</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Technical paper on privacy-first edge-LLM receipt extraction and automated expense categorization.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="expenseai-paper-pdf" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-eye" aria-hidden="true"></i><span>Preview</span></button>
+                        <a href="./assets/media/ExpenseAI.mp4" download="ExpenseAI_Technical_Paper.pdf" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+
+                <!-- 14. ExpenseAI Demo Video -->
+                <article class="doc-card surface-card is-interactive p-5 flex flex-col justify-between" data-doc-type="mp4">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="doc-type-badge doc-type-badge--mp4">MP4 &bull; 135.4 MB</span>
+                            <span class="font-mono-tech text-xs" style="color: var(--text-muted);">ExpenseAI</span>
+                        </div>
+                        <h2 class="text-base font-bold mb-2">ExpenseAI — Live Demo Walkthrough</h2>
+                        <p class="text-xs sm:text-sm mb-4" style="color: var(--text-secondary);">Full end-to-end video walkthrough of the ExpenseAI application and inference pipeline.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2 pt-3 border-t" style="border-color: var(--border-subtle);">
+                        <button type="button" data-open-doc="expenseai-demo-mp4" class="doc-action-btn doc-action-btn--primary"><i class="fas fa-play" aria-hidden="true"></i><span>Watch Video</span></button>
+                        <a href="./assets/documents/armourtrack_showcase.pptx" download="ExpenseAI_Demo_Walkthrough.mp4" class="doc-action-btn"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- Interactive Document & Media Viewer Modal -->
+    <div id="doc-viewer-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="doc-viewer-title">
+        <div class="modal-panel max-w-5xl h-[90dvh] flex flex-col">
+            <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 border-b" style="border-color: var(--border-subtle);">
+                <div class="min-w-0">
+                    <div class="flex items-center gap-2.5 mb-0.5">
+                        <span id="doc-viewer-badge" class="doc-type-badge doc-type-badge--pdf">PDF</span>
+                        <h2 id="doc-viewer-title" class="text-sm sm:text-base font-bold truncate">Document Title</h2>
+                    </div>
+                    <p id="doc-viewer-subtitle" class="font-mono-tech text-xs" style="color: var(--text-muted);">Project &bull; Size</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a id="doc-viewer-open-tab" href="#" target="_blank" rel="noopener noreferrer" class="doc-action-btn"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i><span class="hidden sm:inline">New Tab</span></a>
+                    <a id="doc-viewer-download" href="#" download class="doc-action-btn doc-action-btn--primary"><i class="fas fa-download" aria-hidden="true"></i><span>Download</span></a>
+                    <button id="doc-viewer-close" type="button" class="icon-control-btn" aria-label="Close viewer"><i class="fas fa-times" aria-hidden="true"></i></button>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-hidden flex items-center justify-center p-3 sm:p-4" style="background: var(--bg-surface-elevated);">
+                <div id="doc-pdf-wrap" class="hidden w-full h-full">
+                    <iframe id="doc-pdf-frame" src="about:blank" title="PDF Document Preview" class="w-full h-full rounded-lg border" style="border-color: var(--border-subtle); background: #ffffff;"></iframe>
+                </div>
+
+                <div id="doc-video-wrap" class="hidden w-full h-full flex items-center justify-center">
+                    <video id="doc-video-player" controls playsinline class="max-w-full max-h-full rounded-xl shadow-xl bg-black"></video>
+                </div>
+
+                <div id="doc-office-wrap" class="hidden max-w-lg w-full surface-card p-6 sm:p-8 text-center">
+                    <i class="fas fa-file-alt text-4xl highlight mb-4" aria-hidden="true"></i>
+                    <h3 id="doc-office-title" class="text-lg font-bold mb-1">Office Document</h3>
+                    <p id="doc-office-details" class="font-mono-tech text-xs mb-4" style="color: var(--text-muted);">PowerPoint / Word</p>
+                    <p class="text-xs sm:text-sm mb-6" style="color: var(--text-secondary);">
+                        Browsers cannot render <code class="font-mono-tech highlight">.pptx</code> or <code class="font-mono-tech highlight">.docx</code> files natively without an external Office server. Download the file directly below to open it locally.
+                    </p>
+                    <a id="doc-office-download" href="#" download class="btn-primary"><i class="fas fa-download" aria-hidden="true"></i><span>Download File</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-7 px-4 text-center text-xs sm:text-sm">
+        <p>&copy; 2026 Nirmalya Sinha &bull; VLSI, FPGA Edge AI &amp; Hardware Security</p>
+    </footer>
+
+    <script src="assets/js/script.js" defer></script>
+</body>
+</html>

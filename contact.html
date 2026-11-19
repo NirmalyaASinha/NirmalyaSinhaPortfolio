@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>Contact | Nirmalya Sinha</title>
+    <meta name="description" content="Contact Nirmalya Sinha — VLSI Design, FPGA Edge AI, and Hardware Security collaborations, research internships, and LearnVLSI.">
+
+    <script>
+        (function () {
+            var root = document.documentElement;
+            root.classList.add('js-enabled');
+            var saved = null;
+            try { saved = localStorage.getItem('nirmalya-theme'); } catch (e) {}
+            var theme = (saved === 'light' || saved === 'dark')
+                ? saved
+                : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            root.setAttribute('data-theme', theme);
+            root.style.colorScheme = theme;
+        })();
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <canvas id="circuit-canvas" aria-hidden="true"></canvas>
+
+    <!-- Shared Navigation Header -->
+    <header id="header" class="py-3 px-4 sm:px-8 lg:px-14">
+        <nav class="container mx-auto flex justify-between items-center gap-4" aria-label="Primary Navigation">
+            <a href="index.html" class="text-xl sm:text-2xl font-bold tracking-tight" style="color: var(--text-heading);">
+                Nirmalya<span class="highlight">.</span>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-6">
+                <ul class="flex items-center space-x-6">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="projects.html" class="nav-link">Projects</a></li>
+                    <li><a href="vault.html" class="nav-link">Vault</a></li>
+                    <li><a href="contact.html" class="nav-link active" aria-current="page">Contact</a></li>
+                </ul>
+
+                <div class="flex items-center gap-2.5">
+                    <button type="button" data-open-cmd class="icon-control-btn px-3 gap-1.5 text-xs font-mono-tech" aria-label="Open quick navigation palette">
+                        <i class="fas fa-terminal text-[11px]" aria-hidden="true"></i>
+                        <span>⌘K</span>
+                    </button>
+                    <button id="theme-toggle" type="button" class="icon-control-btn" aria-label="Switch theme" aria-pressed="true">
+                        <span class="theme-icon-sun"><i class="fas fa-sun text-sm" aria-hidden="true"></i></span>
+                        <span class="theme-icon-moon"><i class="fas fa-moon text-sm" aria-hidden="true"></i></span>
+                    </button>
+                    <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="btn-primary !py-2 !px-3.5 !min-h-[40px] !text-xs">
+                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i><span>Resume</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex lg:hidden items-center gap-2">
+                <button type="button" onclick="document.getElementById('theme-toggle').click()" class="icon-control-btn" aria-label="Toggle Light or Dark Theme">
+                    <span class="theme-icon-sun"><i class="fas fa-sun text-sm" aria-hidden="true"></i></span>
+                    <span class="theme-icon-moon"><i class="fas fa-moon text-sm" aria-hidden="true"></i></span>
+                </button>
+                <button id="menu-btn" type="button" class="icon-control-btn text-lg" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div id="mobile-menu" class="lg:hidden mt-3" aria-hidden="true">
+            <ul class="mobile-menu-panel flex flex-col items-center space-y-3 py-5 px-4 shadow-xl">
+                <li><a href="index.html" class="nav-link text-base">Home</a></li>
+                <li><a href="about.html" class="nav-link text-base">About</a></li>
+                <li><a href="projects.html" class="nav-link text-base">Projects</a></li>
+                <li><a href="vault.html" class="nav-link text-base">Vault</a></li>
+                <li><a href="contact.html" class="nav-link active text-base" aria-current="page">Contact</a></li>
+                <li class="pt-2 flex items-center gap-3">
+                    <button type="button" data-open-cmd class="btn-secondary !py-2 !px-4 !text-xs"><span>Search ⌘K</span></button>
+                    <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="btn-primary !py-2 !px-4 !text-xs">
+                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i><span>Resume</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main id="main-content" class="pt-24 pb-20 px-4 sm:px-8 lg:px-14">
+        <div class="container mx-auto max-w-3xl pt-10">
+            <div class="text-center mb-10">
+                <p class="font-mono-tech text-xs uppercase tracking-widest highlight mb-2">04 / Connect</p>
+                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">Get in <span class="highlight">Touch</span></h1>
+                <p class="text-sm sm:text-base leading-relaxed max-w-2xl mx-auto" style="color: var(--text-muted);">
+                    Open to research internships in VLSI design, reconfigurable FPGA computing, hardware security, and embedded systems, as well as LearnVLSI collaborations.
+                </p>
+            </div>
+
+            <!-- Email Cards with One-Click Copy -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                <div class="surface-card p-5 flex flex-col justify-between gap-4">
+                    <div class="flex items-start gap-3 min-w-0">
+                        <i class="fas fa-envelope highlight text-lg mt-1" aria-hidden="true"></i>
+                        <div class="min-w-0">
+                            <p class="text-xs" style="color: var(--text-muted);">Personal Email</p>
+                            <a href="mailto:n.nirmalya.n@gmail.com" class="font-medium text-sm sm:text-base break-all hover:underline" style="color: var(--text-heading);">n.nirmalya.n@gmail.com</a>
+                        </div>
+                    </div>
+                    <button type="button" data-copy-text="n.nirmalya.n@gmail.com" class="doc-action-btn w-full">
+                        <i class="fas fa-copy" aria-hidden="true"></i>
+                        <span class="copy-label">Copy Personal Email</span>
+                    </button>
+                </div>
+
+                <div class="surface-card p-5 flex flex-col justify-between gap-4">
+                    <div class="flex items-start gap-3 min-w-0">
+                        <i class="fas fa-university highlight text-lg mt-1" aria-hidden="true"></i>
+                        <div class="min-w-0">
+                            <p class="text-xs" style="color: var(--text-muted);">Institutional Email (RRU)</p>
+                            <a href="mailto:24beevdt031@student.rru.ac.in" class="font-medium text-sm sm:text-base break-all hover:underline" style="color: var(--text-heading);">24beevdt031@student.rru.ac.in</a>
+                        </div>
+                    </div>
+                    <button type="button" data-copy-text="24beevdt031@student.rru.ac.in" class="doc-action-btn w-full">
+                        <i class="fas fa-copy" aria-hidden="true"></i>
+                        <span class="copy-label">Copy RRU Email</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- CV Banner -->
+            <div class="surface-card p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-bold mb-1">Curriculum Vitae (PDF)</h2>
+                    <p class="text-xs sm:text-sm" style="color: var(--text-muted);">B.Tech EE (VLSI Design, 9.05 SGPA) &bull; IIT (BHU) &amp; RRU Research &bull; Key Projects</p>
+                </div>
+                <div class="flex flex-wrap gap-2.5">
+                    <a href="vault.html?doc=cv-nirmalya" class="btn-secondary !py-2 !px-4 !text-xs">
+                        <i class="fas fa-eye" aria-hidden="true"></i><span>Preview CV</span>
+                    </a>
+                    <a href="./assets/documents/CV_NirmalyaSinha.pdf" download="CV_NirmalyaSinha.pdf" class="btn-primary !py-2 !px-4 !text-xs">
+                        <i class="fas fa-download" aria-hidden="true"></i><span>Download CV</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social & Platform Links -->
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="https://www.linkedin.com/in/nirmalya-sinha-8b7a37318/" target="_blank" rel="noopener noreferrer" class="btn-secondary !py-2.5 !px-4 !text-sm">
+                    <i class="fab fa-linkedin-in highlight" aria-hidden="true"></i><span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/NirmalyaASinha" target="_blank" rel="noopener noreferrer" class="btn-secondary !py-2.5 !px-4 !text-sm">
+                    <i class="fab fa-github highlight" aria-hidden="true"></i><span>GitHub</span>
+                </a>
+                <a href="https://learnvlsi.in" target="_blank" rel="noopener noreferrer" class="btn-secondary !py-2.5 !px-4 !text-sm">
+                    <i class="fas fa-microchip highlight" aria-hidden="true"></i><span>LearnVLSI</span>
+                </a>
+                <a href="https://www.youtube.com/@Nirmalya-Sinha" target="_blank" rel="noopener noreferrer" class="btn-secondary !py-2.5 !px-4 !text-sm">
+                    <i class="fab fa-youtube text-red-500" aria-hidden="true"></i><span>YouTube</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-7 px-4 text-center text-xs sm:text-sm">
+        <p>&copy; 2026 Nirmalya Sinha &bull; VLSI, FPGA Edge AI &amp; Hardware Security</p>
+    </footer>
+
+    <script src="assets/js/script.js" defer></script>
+</body>
+</html>
