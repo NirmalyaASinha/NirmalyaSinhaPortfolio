@@ -1,0 +1,2 @@
+# Exclude >25 MiB media file to stay within Cloudflare Workers/Pages 25 MiB asset limit
+assets/documents/armourtrack_showcase.pptx

@@ -406,11 +406,11 @@ document.addEventListener('DOMContentLoaded', () => {
         'expenseai-demo-mp4': {
             title: 'ExpenseAI — Live Demo Walkthrough',
             type: 'MP4',
-            size: '135.4 MB',
+            size: 'YouTube Demo',
             project: 'ExpenseAI',
-            summary: 'Full end-to-end video walkthrough of the ExpenseAI application and inference pipeline.',
-            src: './assets/documents/armourtrack_showcase.pptx',
-            downloadName: 'ExpenseAI_Demo_Walkthrough.mp4'
+            summary: 'Full end-to-end video walkthrough of the ExpenseAI application and inference pipeline (hosted externally due to 25 MiB Cloudflare asset limit).',
+            src: 'https://www.youtube.com/@Nirmalya-Sinha',
+            external: true
         }
     };
 
